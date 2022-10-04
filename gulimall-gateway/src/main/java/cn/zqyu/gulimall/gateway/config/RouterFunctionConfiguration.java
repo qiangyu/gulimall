@@ -1,63 +1,55 @@
 
 package cn.zqyu.gulimall.gateway.config;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.web.cors.reactive.CorsUtils;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
-import reactor.core.publisher.Mono;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.Collections;
 
 /**
  * 路由配置信息
  *
  * @author Chill
  */
-@Slf4j
 @Configuration
-@AllArgsConstructor
 public class RouterFunctionConfiguration {
 
     /**
      * 这里为支持的请求头，如果有自定义的header字段请自己添加
      */
-    private static final String ALLOWED_HEADERS = "X-Requested-With, Tenant-Id, Blade-Auth, Content-Type, Authorization, credential, X-XSRF-TOKEN, token, username, client, knfie4j-gateway-request, request-origion";
-    private static final String ALLOWED_METHODS = "GET,POST,PUT,DELETE,OPTIONS,HEAD";
+    private static final String ALLOWED_HEADERS = "*";
+    private static final String ALLOWED_METHODS = "*";
     private static final String ALLOWED_ORIGIN = "*";
     private static final String ALLOWED_EXPOSE = "*";
-    private static final String MAX_AGE = "18000L";
+    private static final Long MAX_AGE = 18000L;
 
     /**
-     * 跨域配置
+     * 跨域解决办法之一：
+     * 过滤器，给所有请求增加请求头信息
+     * 使得预检请求通过
      */
     @Bean
-    public WebFilter corsFilter() {
-        return (ServerWebExchange ctx, WebFilterChain chain) -> {
-            ServerHttpRequest request = ctx.getRequest();
-            if (CorsUtils.isCorsRequest(request)) {
-                ServerHttpResponse response = ctx.getResponse();
-                HttpHeaders headers = response.getHeaders();
-                headers.add("Access-Control-Allow-Headers", ALLOWED_HEADERS);
-                headers.add("Access-Control-Allow-Methods", ALLOWED_METHODS);
-                headers.add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
-                headers.add("Access-Control-Expose-Headers", ALLOWED_EXPOSE);
-                headers.add("Access-Control-Max-Age", MAX_AGE);
-                headers.add("Access-Control-Allow-Credentials", "true");
-                if (request.getMethod() == HttpMethod.OPTIONS) {
-                    response.setStatusCode(HttpStatus.OK);
-                    return Mono.empty();
-                }
-            }
-            return chain.filter(ctx);
-        };
+    public CorsWebFilter corsWebFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        // 1、配置跨域
+        corsConfiguration.addAllowedHeader(ALLOWED_HEADERS);
+        corsConfiguration.addAllowedMethod(ALLOWED_METHODS);
+        // 当allowCredentials为真时，allowedorigin不能包含特殊值"*"，
+        // 因为不能在"访问-控制-起源“响应头中设置该值。
+        // 要允许凭证到一组起源，显示地列出它们，或者考虑使用"allowedOriginPatterns”代替。
+        // corsConfiguration.addAllowedOrigin(ALLOWED_ORIGIN);
+        corsConfiguration.addAllowedOriginPattern(ALLOWED_ORIGIN);
+        // 否则跨域请求会丢失cookie信息
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setExposedHeaders(Collections.singletonList(ALLOWED_EXPOSE));
+        corsConfiguration.setMaxAge(MAX_AGE);
+
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return new CorsWebFilter(source);
     }
 
 }

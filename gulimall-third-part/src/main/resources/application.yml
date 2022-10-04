@@ -1,0 +1,15 @@
+server:
+  port: 30000
+
+spring:
+  application:
+    name: gulimall-third-part
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    alicloud:
+      access-key: own-account
+      secret-key: own-account
+      oss:
+        endpoint: own-account
+        bucket: own-account

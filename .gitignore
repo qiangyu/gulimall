@@ -31,4 +31,5 @@ target/
 
 ### VS Code ###
 .vscode/
+/renren-fast-vue/
 /renren-fast-vue/node_modules/

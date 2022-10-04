@@ -11,10 +11,24 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: gulimall-admin-api # 路由标示，必须唯一
+        - id: gulimall-product-route
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+        - id: gulimall-third-part
+          uri: lb://gulimall-third-part
+          predicates:
+            - Path=/api/thirdpart/**
+          filters:
+            - RewritePath=/api/thirdpart/?(?<segment>.*), /$\{segment}
+
+        - id: gulimall-admin-route # 路由标示，必须唯一
           uri: lb://renren-fast # 路由的目标地址
           predicates: # 路由断言，判断请求是否符合规则
-            - Path=/api/** # 路径断言，判断路径是否是以/user开头，如果是则符合
+            - Path=/api/** # 路径断言，判断路径是否是以/api开头，如果是则符合
           filters:
             - RewritePath=/api/?(?<segment>.*), /renren-fast/$\{segment}
 

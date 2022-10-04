@@ -4,6 +4,7 @@ spring:
         druid:
             driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://10.0.0.111:3306/gulimall_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#            url: jdbc:mysql://192.168.43.111:3306/gulimall_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
             username: root
             password: xiaoyu
             initial-size: 10

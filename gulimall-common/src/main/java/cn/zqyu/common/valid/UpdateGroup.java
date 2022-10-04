@@ -1,4 +1,4 @@
 package cn.zqyu.common.valid;
 
-public interface UpdateGroup {
+public interface UpdateGroup extends AllValidGroup {
 }
