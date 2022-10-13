@@ -3,6 +3,8 @@ package cn.zqyu.gulimall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import cn.zqyu.gulimall.product.dto.AttrDto;
+import cn.zqyu.gulimall.product.vo.AttrVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,13 @@ public class AttrController {
 
     private final AttrService attrService;
 
+    @RequestMapping("/base/list/{catelogId}")
+    public R list(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId){
+        PageUtils page = attrService.queryBaseAttrPage(params, catelogId);
+
+        return R.ok().put("page", page);
+    }
+
     /**
      * 列表
      */
@@ -47,17 +56,17 @@ public class AttrController {
      */
     @RequestMapping("/info/{attrId}")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+		AttrVo attrVo = attrService.getAttrDetail(attrId);
 
-        return R.ok().put("attr", attr);
+        return R.ok().put("attr", attrVo);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+    public R save(@RequestBody AttrDto attrDto){
+		attrService.saveDetail(attrDto);
 
         return R.ok();
     }
@@ -66,8 +75,8 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
+    public R update(@RequestBody AttrDto attrDto){
+		attrService.updateDetail(attrDto);
 
         return R.ok();
     }

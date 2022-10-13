@@ -3,6 +3,7 @@ package cn.zqyu.gulimall.product.controller;
 import cn.zqyu.common.utils.R;
 import cn.zqyu.common.vo.product.CategoryEntityVO;
 import cn.zqyu.gulimall.product.entity.CategoryEntity;
+import cn.zqyu.gulimall.product.service.CategoryBrandRelationService;
 import cn.zqyu.gulimall.product.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final CategoryBrandRelationService categoryBrandRelationService;
 
     /**
      * 列表
@@ -62,7 +64,8 @@ public class CategoryController {
      */
     @PostMapping("/update")
     public R update(@RequestBody CategoryEntity category) {
-        categoryService.updateById(category);
+        // categoryService.updateDetail(category);
+        categoryBrandRelationService.updateCategoryInfo(category);
 
         return R.ok();
     }

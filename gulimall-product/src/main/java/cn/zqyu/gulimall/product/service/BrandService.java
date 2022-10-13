@@ -1,8 +1,8 @@
 package cn.zqyu.gulimall.product.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.gulimall.product.entity.BrandEntity;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Map;
 

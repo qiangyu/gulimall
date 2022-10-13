@@ -101,6 +101,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         if (category == null) {
             return new ArrayList<>();
         }
+        paths.addFirst(category.getCatId());
 
         // 递归获取父 category id
         getCategoryParentCid(category, paths);
@@ -143,6 +144,4 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 })
                 .collect(Collectors.toList());
     }
-
-
 }

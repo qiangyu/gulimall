@@ -7,6 +7,7 @@ import cn.zqyu.common.valid.UpdateGroup;
 import cn.zqyu.common.valid.UpdateStatusGroup;
 import cn.zqyu.gulimall.product.entity.BrandEntity;
 import cn.zqyu.gulimall.product.service.BrandService;
+import cn.zqyu.gulimall.product.service.CategoryBrandRelationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ import java.util.Map;
 public class BrandController {
 
     private final BrandService brandService;
+    private final CategoryBrandRelationService categoryBrandRelationService;
 
     /**
      * 列表
@@ -65,7 +67,8 @@ public class BrandController {
      */
     @PostMapping("/update")
     public R update(@Validated(UpdateGroup.class) @RequestBody BrandEntity brand) {
-        brandService.updateById(brand);
+        // brandService.updateDetail(brand);
+        categoryBrandRelationService.updateBrandInfo(brand);
 
         return R.ok();
     }

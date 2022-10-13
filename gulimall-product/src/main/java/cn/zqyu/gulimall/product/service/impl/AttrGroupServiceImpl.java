@@ -34,8 +34,11 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     public PageUtils queryPage(Map<String, Object> params, String catelogId) {
 
         LambdaQueryWrapper<AttrGroupEntity> queryWrapper = Wrappers.lambdaQuery(AttrGroupEntity.class)
-                .eq(AttrGroupEntity::getCatelogId, catelogId)
                 .orderByAsc(AttrGroupEntity::getSort);
+
+        if (StrUtil.isNotBlank(catelogId)) {
+            queryWrapper.eq(AttrGroupEntity::getCatelogId, catelogId);
+        }
 
         String attrGroupName = (String) params.get("key");
         if (StrUtil.isNotBlank(attrGroupName)) {

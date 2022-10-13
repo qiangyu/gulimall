@@ -4,6 +4,8 @@ import cn.zqyu.gulimall.product.entity.BrandEntity;
 import cn.zqyu.gulimall.product.entity.CategoryEntity;
 import cn.zqyu.gulimall.product.service.BrandService;
 import cn.zqyu.gulimall.product.service.CategoryService;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Map;
@@ -16,6 +18,7 @@ import cn.zqyu.common.utils.Query;
 import cn.zqyu.gulimall.product.dao.CategoryBrandRelationDao;
 import cn.zqyu.gulimall.product.entity.CategoryBrandRelationEntity;
 import cn.zqyu.gulimall.product.service.CategoryBrandRelationService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("categoryBrandRelationService")
@@ -35,17 +38,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         return new PageUtils(page);
     }
 
-    /**
-     * <p>
-     * 插入品牌与分类关联详细信息
-     *
-     * </p>
-     *
-     * @param categoryBrandRelation categoryBrandRelation
-     * @return boolean /
-     * @author zq yu
-     * @since 2022/10/4 23:44
-     */
+
     @Override
     public boolean saveDetail(CategoryBrandRelationEntity categoryBrandRelation) {
         BrandEntity brandEntity = brandService.getById(categoryBrandRelation.getBrandId());
@@ -63,5 +56,29 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         categoryBrandRelation.setCatelogName(categoryEntity.getName());
 
         return save(categoryBrandRelation);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateBrandInfo(BrandEntity brandEntity) {
+
+        // 先更新品牌
+        brandService.updateById(brandEntity);
+
+        return this.update(Wrappers.lambdaUpdate(CategoryBrandRelationEntity.class)
+                .set(CategoryBrandRelationEntity::getBrandName, brandEntity.getName())
+                .eq(CategoryBrandRelationEntity::getBrandId, brandEntity.getBrandId()));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateCategoryInfo(CategoryEntity categoryEntity) {
+
+        // 先更新分类
+        categoryService.updateById(categoryEntity);
+
+        return this.update(Wrappers.lambdaUpdate(CategoryBrandRelationEntity.class)
+                .set(CategoryBrandRelationEntity::getCatelogName, categoryEntity.getName())
+                .eq(CategoryBrandRelationEntity::getCatelogId, categoryEntity.getCatId()));
     }
 }
