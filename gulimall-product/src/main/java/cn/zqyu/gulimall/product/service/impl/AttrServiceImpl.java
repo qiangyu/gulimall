@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
 import cn.zqyu.gulimall.product.dao.AttrDao;
-import cn.zqyu.gulimall.product.dto.AttrDto;
+import cn.zqyu.gulimall.product.vo.AttrVo;
 import cn.zqyu.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import cn.zqyu.gulimall.product.entity.AttrEntity;
 import cn.zqyu.gulimall.product.entity.AttrGroupEntity;
@@ -13,7 +13,7 @@ import cn.zqyu.gulimall.product.service.AttrAttrgroupRelationService;
 import cn.zqyu.gulimall.product.service.AttrGroupService;
 import cn.zqyu.gulimall.product.service.AttrService;
 import cn.zqyu.gulimall.product.service.CategoryService;
-import cn.zqyu.gulimall.product.vo.AttrVo;
+import cn.zqyu.gulimall.product.vo.AttrRespVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -118,77 +118,77 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 .orElseGet(Stream::empty)
                 .collect(Collectors.toMap(CategoryEntity::getCatId, CategoryEntity::getName));
 
-        List<AttrVo> attrVoList = records.stream().map(attrEntity -> {
-            AttrVo attrVo = new AttrVo();
-            BeanUtils.copyProperties(attrEntity, attrVo);
+        List<AttrRespVo> attrRespVoList = records.stream().map(attrEntity -> {
+            AttrRespVo attrRespVo = new AttrRespVo();
+            BeanUtils.copyProperties(attrEntity, attrRespVo);
             // 分组名称
-            attrVo.setGroupName(attrGroupNameMap.get(attrIdAttrGroupIdMap.get(attrVo.getAttrId())));
+            attrRespVo.setGroupName(attrGroupNameMap.get(attrIdAttrGroupIdMap.get(attrRespVo.getAttrId())));
             // 分类名称
-            attrVo.setCatelogName(categoryNameMap.get(attrVo.getCatelogId()));
-            return attrVo;
+            attrRespVo.setCatelogName(categoryNameMap.get(attrRespVo.getCatelogId()));
+            return attrRespVo;
         }).collect(Collectors.toList());
 
         PageUtils pageUtils = new PageUtils(page);
 
-        pageUtils.setList(attrVoList);
+        pageUtils.setList(attrRespVoList);
 
         return pageUtils;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean saveDetail(AttrDto attrDto) {
+    public boolean saveDetail(AttrVo attrVo) {
         AttrEntity attrEntity = new AttrEntity();
-        BeanUtils.copyProperties(attrDto, attrEntity);
+        BeanUtils.copyProperties(attrVo, attrEntity);
         this.save(attrEntity);
         return attrAttrgroupRelationService.save(AttrAttrgroupRelationEntity.builder()
-                .attrId(attrDto.getAttrId())
-                .attrGroupId(attrDto.getAttrGroupId())
+                .attrId(attrVo.getAttrId())
+                .attrGroupId(attrVo.getAttrGroupId())
                 .build());
     }
 
     @Override
-    public AttrVo getAttrDetail(Long attrId) {
+    public AttrRespVo getAttrDetail(Long attrId) {
 
         AttrEntity attrEntity = this.getById(attrId);
-        AttrVo attrVo = new AttrVo();
-        BeanUtils.copyProperties(attrEntity, attrVo);
+        AttrRespVo attrRespVo = new AttrRespVo();
+        BeanUtils.copyProperties(attrEntity, attrRespVo);
 
-        CategoryEntity categoryEntity = categoryService.getById(attrVo.getCatelogId());
+        CategoryEntity categoryEntity = categoryService.getById(attrRespVo.getCatelogId());
         if (categoryEntity != null) {
-            attrVo.setCatelogName(categoryEntity.getName());
+            attrRespVo.setCatelogName(categoryEntity.getName());
         }
 
-        List<Long> catelogPath = categoryService.findCatelogPath(attrVo.getCatelogId());
-        attrVo.setCatelogPath(catelogPath);
+        List<Long> catelogPath = categoryService.findCatelogPath(attrRespVo.getCatelogId());
+        attrRespVo.setCatelogPath(catelogPath);
 
         AttrAttrgroupRelationEntity relationEntity = attrAttrgroupRelationService.getOne(
                 Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class)
-                        .eq(AttrAttrgroupRelationEntity::getAttrId, attrVo.getAttrId())
+                        .eq(AttrAttrgroupRelationEntity::getAttrId, attrRespVo.getAttrId())
         );
         if (relationEntity != null) {
             AttrGroupEntity groupEntity = attrGroupService.getById(relationEntity.getAttrGroupId());
             if (groupEntity != null) {
-                attrVo.setGroupName(groupEntity.getAttrGroupName());
+                attrRespVo.setGroupName(groupEntity.getAttrGroupName());
             }
         }
 
-        return attrVo;
+        return attrRespVo;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateDetail(AttrDto attrDto) {
+    public boolean updateDetail(AttrVo attrVo) {
         // 先保存关系的属性组
         attrAttrgroupRelationService.update(AttrAttrgroupRelationEntity.builder()
-                        .attrId(attrDto.getAttrId())
-                        .attrGroupId(attrDto.getAttrGroupId())
+                        .attrId(attrVo.getAttrId())
+                        .attrGroupId(attrVo.getAttrGroupId())
                         .build(),
                 Wrappers.lambdaUpdate(AttrAttrgroupRelationEntity.class)
-                        .eq(AttrAttrgroupRelationEntity::getAttrId, attrDto.getAttrId()));
+                        .eq(AttrAttrgroupRelationEntity::getAttrId, attrVo.getAttrId()));
 
         AttrEntity attrEntity = new AttrEntity();
-        BeanUtils.copyProperties(attrDto, attrEntity);
+        BeanUtils.copyProperties(attrVo, attrEntity);
         // 再保存基本信息
         return this.save(attrEntity);
     }

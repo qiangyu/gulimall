@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 商品属性
@@ -59,9 +58,6 @@ public class AttrVo implements Serializable {
 	 */
 	private Integer showDesc;
 
-	private String catelogName;
-	private String groupName;
-
-	private List<Long> catelogPath;
+	private Long attrGroupId;
 
 }

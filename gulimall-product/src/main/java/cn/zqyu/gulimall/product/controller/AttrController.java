@@ -3,8 +3,8 @@ package cn.zqyu.gulimall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import cn.zqyu.gulimall.product.dto.AttrDto;
 import cn.zqyu.gulimall.product.vo.AttrVo;
+import cn.zqyu.gulimall.product.vo.AttrRespVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.zqyu.gulimall.product.entity.AttrEntity;
 import cn.zqyu.gulimall.product.service.AttrService;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.R;
@@ -56,17 +55,17 @@ public class AttrController {
      */
     @RequestMapping("/info/{attrId}")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrVo attrVo = attrService.getAttrDetail(attrId);
+		AttrRespVo attrRespVo = attrService.getAttrDetail(attrId);
 
-        return R.ok().put("attr", attrVo);
+        return R.ok().put("attr", attrRespVo);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody AttrDto attrDto){
-		attrService.saveDetail(attrDto);
+    public R save(@RequestBody AttrVo attrVo){
+		attrService.saveDetail(attrVo);
 
         return R.ok();
     }
@@ -75,8 +74,8 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrDto attrDto){
-		attrService.updateDetail(attrDto);
+    public R update(@RequestBody AttrVo attrVo){
+		attrService.updateDetail(attrVo);
 
         return R.ok();
     }

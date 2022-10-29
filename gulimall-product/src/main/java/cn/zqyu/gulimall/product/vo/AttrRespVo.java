@@ -1,10 +1,11 @@
-package cn.zqyu.gulimall.product.dto;
+package cn.zqyu.gulimall.product.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 商品属性
@@ -14,7 +15,7 @@ import java.io.Serializable;
  * @date 2022-09-21 20:31:21
  */
 @Data
-public class AttrDto implements Serializable {
+public class AttrRespVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -58,6 +59,9 @@ public class AttrDto implements Serializable {
 	 */
 	private Integer showDesc;
 
-	private Long attrGroupId;
+	private String catelogName;
+	private String groupName;
+
+	private List<Long> catelogPath;
 
 }

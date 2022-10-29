@@ -1,9 +1,9 @@
 package cn.zqyu.gulimall.product.service;
 
 import cn.zqyu.common.utils.PageUtils;
-import cn.zqyu.gulimall.product.dto.AttrDto;
-import cn.zqyu.gulimall.product.entity.AttrEntity;
 import cn.zqyu.gulimall.product.vo.AttrVo;
+import cn.zqyu.gulimall.product.entity.AttrEntity;
+import cn.zqyu.gulimall.product.vo.AttrRespVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Map;
@@ -21,7 +21,7 @@ public interface AttrService extends IService<AttrEntity> {
 
     PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId);
 
-    boolean saveDetail(AttrDto attrDto);
+    boolean saveDetail(AttrVo attrVo);
 
     /**
      * <p>
@@ -34,7 +34,7 @@ public interface AttrService extends IService<AttrEntity> {
      * @author zq yu
      * @since 2022/10/13 23:12
      */
-    AttrVo getAttrDetail(Long attrId);
+    AttrRespVo getAttrDetail(Long attrId);
 
     /**
      * <p>
@@ -42,11 +42,11 @@ public interface AttrService extends IService<AttrEntity> {
      *
      * </p>
      *
-     * @param attrDto attrDto
+     * @param attrVo attrDto
      * @return boolean /
      * @author zq yu
      * @since 2022/10/13 23:19
      */
-    boolean updateDetail(AttrDto attrDto);
+    boolean updateDetail(AttrVo attrVo);
 }
 
