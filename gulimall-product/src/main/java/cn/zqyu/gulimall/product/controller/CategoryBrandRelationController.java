@@ -3,14 +3,13 @@ package cn.zqyu.gulimall.product.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import cn.zqyu.gulimall.product.entity.BrandEntity;
+import cn.zqyu.gulimall.product.vo.BrandVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.zqyu.gulimall.product.entity.CategoryBrandRelationEntity;
 import cn.zqyu.gulimall.product.service.CategoryBrandRelationService;
@@ -32,6 +31,19 @@ import cn.zqyu.common.utils.R;
 public class CategoryBrandRelationController {
 
     private final CategoryBrandRelationService categoryBrandRelationService;
+
+    @GetMapping("/brands/list")
+    public R relationBradsList(@RequestParam("catId") Long catId) {
+
+        List<BrandEntity> list = categoryBrandRelationService.getBrandsByCatId(catId);
+
+        List<BrandVo> voList = list.stream().map(brand -> BrandVo.builder()
+                .brandId(brand.getBrandId())
+                .brandName(brand.getName())
+                .build()).collect(Collectors.toList());
+
+        return R.ok().put("data", voList);
+    }
 
     /**
      * 列表

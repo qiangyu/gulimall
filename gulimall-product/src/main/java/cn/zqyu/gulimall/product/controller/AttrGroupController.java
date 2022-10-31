@@ -6,13 +6,10 @@ import java.util.Map;
 
 import cn.zqyu.common.vo.product.AttrGroupVO;
 import cn.zqyu.gulimall.product.service.CategoryService;
+import cn.zqyu.gulimall.product.vo.AttrGroupWithAttrsVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.zqyu.gulimall.product.entity.AttrGroupEntity;
 import cn.zqyu.gulimall.product.service.AttrGroupService;
@@ -36,6 +33,14 @@ public class AttrGroupController {
     private final AttrGroupService attrGroupService;
 
     private final CategoryService categoryService;
+
+    @GetMapping("/{catlogId}/withattr")
+    public R getAttrGroupWithAttrs(@PathVariable("catlogId") Long catlogId) {
+
+        List<AttrGroupWithAttrsVo> list  = attrGroupService.getAttrGroupWithAttrsByCatlogId(catlogId);
+
+        return R.ok().put("data", list);
+    }
 
     /**
      * 列表

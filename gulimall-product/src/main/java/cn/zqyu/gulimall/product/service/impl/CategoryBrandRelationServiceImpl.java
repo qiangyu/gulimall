@@ -1,24 +1,25 @@
 package cn.zqyu.gulimall.product.service.impl;
 
-import cn.zqyu.gulimall.product.entity.BrandEntity;
-import cn.zqyu.gulimall.product.entity.CategoryEntity;
-import cn.zqyu.gulimall.product.service.BrandService;
-import cn.zqyu.gulimall.product.service.CategoryService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import java.util.Map;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
-
 import cn.zqyu.gulimall.product.dao.CategoryBrandRelationDao;
+import cn.zqyu.gulimall.product.entity.BrandEntity;
 import cn.zqyu.gulimall.product.entity.CategoryBrandRelationEntity;
+import cn.zqyu.gulimall.product.entity.CategoryEntity;
+import cn.zqyu.gulimall.product.service.BrandService;
 import cn.zqyu.gulimall.product.service.CategoryBrandRelationService;
+import cn.zqyu.gulimall.product.service.CategoryService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("categoryBrandRelationService")
@@ -80,5 +81,18 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         return this.update(Wrappers.lambdaUpdate(CategoryBrandRelationEntity.class)
                 .set(CategoryBrandRelationEntity::getCatelogName, categoryEntity.getName())
                 .eq(CategoryBrandRelationEntity::getCatelogId, categoryEntity.getCatId()));
+    }
+
+    @Override
+    public List<BrandEntity> getBrandsByCatId(Long catId) {
+
+        List<CategoryBrandRelationEntity> relationList = this.list(
+                Wrappers.lambdaQuery(CategoryBrandRelationEntity.class)
+                        .eq(CategoryBrandRelationEntity::getCatelogId, catId)
+        );
+
+        List<Long> brandIds = relationList.stream().map(CategoryBrandRelationEntity::getBrandId).collect(Collectors.toList());
+
+        return brandService.listByIds(brandIds);
     }
 }

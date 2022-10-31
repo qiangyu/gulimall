@@ -23,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -133,6 +135,21 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         pageUtils.setList(attrRespVoList);
 
         return pageUtils;
+    }
+
+    @Override
+    public List<AttrEntity> getRelationAttr(Long attrgroupId) {
+        // 根据分组id查询所有关联关系
+        List<AttrAttrgroupRelationEntity> relationList = attrAttrgroupRelationService.
+                list(Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class).eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrgroupId));
+        // 封装基本属性id
+        List<Long> attrIds = relationList.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+        // 根据id查询基本属性集合
+        if (CollectionUtils.isEmpty(attrIds)) {
+            return new ArrayList<>();
+        }
+        // 非空查询返回
+        return this.listByIds(attrIds);
     }
 
     @Transactional(rollbackFor = Exception.class)

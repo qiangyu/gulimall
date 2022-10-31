@@ -18,7 +18,14 @@ spring:
           filters:
             - RewritePath=/api/?(?<segment>.*), /$\{segment}
 
-        - id: gulimall-third-part
+        - id: gulimall-member-route
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+        - id: gulimall-third-part-route
           uri: lb://gulimall-third-part
           predicates:
             - Path=/api/thirdpart/**

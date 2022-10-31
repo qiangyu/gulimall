@@ -7,6 +7,7 @@ import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.gulimall.product.entity.CategoryBrandRelationEntity;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,5 +61,18 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
      * @since 2022/10/13 13:49
      */
     boolean updateCategoryInfo(CategoryEntity categoryEntity);
+
+    /**
+     * <p>
+     * 根据分类id查询关联品牌信息
+     *
+     * </p>
+     *
+     * @param catId catId
+     * @return java.util.List<cn.zqyu.gulimall.product.entity.BrandEntity> /
+     * @author zq yu
+     * @since 2022/10/29 16:45
+     */
+    List<BrandEntity> getBrandsByCatId(Long catId);
 }
 

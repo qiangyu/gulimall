@@ -21,7 +21,7 @@ public class SpuSaveVO {
     private Long catalogId;
     private Long brandId;
     private BigDecimal weight;
-    private int publishStatus;
+    private Integer publishStatus;
     private List<String> decript;// 保存spu描述图片
     private List<String> images;// 保存spu图片集
     private Bounds bounds;

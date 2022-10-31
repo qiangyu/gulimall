@@ -6,6 +6,7 @@ import cn.zqyu.gulimall.product.entity.AttrEntity;
 import cn.zqyu.gulimall.product.vo.AttrRespVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +22,30 @@ public interface AttrService extends IService<AttrEntity> {
 
     PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId);
 
+    /**
+     * <p>
+     * 查询当前分组关联的所有基本属性
+     *
+     * </p>
+     *
+     * @param attrgroupId attrgroupId
+     * @return java.util.List<cn.zqyu.gulimall.product.entity.AttrEntity> /
+     * @author zq yu
+     * @since 2022/10/29 17:15
+     */
+    List<AttrEntity> getRelationAttr(Long attrgroupId);
+
+    /**
+     * <p>
+     * 保存信息并且添加关联关系
+     *
+     * </p>
+     *
+     * @param attrVo attrVo
+     * @return boolean /
+     * @author zq yu
+     * @since 2022/10/29 17:14
+     */
     boolean saveDetail(AttrVo attrVo);
 
     /**
