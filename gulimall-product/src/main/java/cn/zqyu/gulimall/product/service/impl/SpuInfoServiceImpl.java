@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 
 
 @RequiredArgsConstructor
-@Service("spuInfoService")
+@Service
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> implements SpuInfoService {
 
     private final SpuInfoDescService spuInfoDescService;

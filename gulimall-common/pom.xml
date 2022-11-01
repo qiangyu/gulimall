@@ -49,6 +49,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!-- 负载均衡 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
         <!--        &lt;!&ndash;seata 分布式事务 seata-all使用0.9【所以启动 事务协调者0.9版本的】&ndash;&gt;-->
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.cloud</groupId>-->

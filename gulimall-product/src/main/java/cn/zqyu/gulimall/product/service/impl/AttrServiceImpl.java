@@ -1,10 +1,10 @@
 package cn.zqyu.gulimall.product.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.zqyu.common.constant.product.AttrConstant;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
 import cn.zqyu.gulimall.product.dao.AttrDao;
-import cn.zqyu.gulimall.product.vo.AttrVo;
 import cn.zqyu.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import cn.zqyu.gulimall.product.entity.AttrEntity;
 import cn.zqyu.gulimall.product.entity.AttrGroupEntity;
@@ -13,7 +13,9 @@ import cn.zqyu.gulimall.product.service.AttrAttrgroupRelationService;
 import cn.zqyu.gulimall.product.service.AttrGroupService;
 import cn.zqyu.gulimall.product.service.AttrService;
 import cn.zqyu.gulimall.product.service.CategoryService;
+import cn.zqyu.gulimall.product.vo.AttrGroupWithAttrsVo;
 import cn.zqyu.gulimall.product.vo.AttrRespVo;
+import cn.zqyu.gulimall.product.vo.AttrVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -52,9 +54,23 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     }
 
     @Override
-    public PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId) {
+    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatlogId(Long catlogId) {
+        List<AttrGroupEntity> attrGroupList = attrGroupService.list(Wrappers.lambdaQuery(AttrGroupEntity.class).eq(AttrGroupEntity::getCatelogId, catlogId));
 
-        LambdaQueryWrapper<AttrEntity> queryWrapper = Wrappers.lambdaQuery(AttrEntity.class);
+        return attrGroupList.stream().map(attrGroup -> {
+            AttrGroupWithAttrsVo vo = new AttrGroupWithAttrsVo();
+            BeanUtils.copyProperties(attrGroup, vo);
+            List<AttrEntity> attrList = this.getRelationAttr(attrGroup.getCatelogId());
+            vo.setAttrs(attrList);
+            return vo;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId, String attrType) {
+
+        LambdaQueryWrapper<AttrEntity> queryWrapper = Wrappers.lambdaQuery(AttrEntity.class)
+                .eq(AttrEntity::getAttrType, AttrConstant.AttrEnum.getCode(attrType));
 
         if (catelogId != null && !catelogId.equals(0L)) {
             queryWrapper.eq(AttrEntity::getCatelogId, catelogId);
@@ -158,10 +174,13 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         AttrEntity attrEntity = new AttrEntity();
         BeanUtils.copyProperties(attrVo, attrEntity);
         this.save(attrEntity);
-        return attrAttrgroupRelationService.save(AttrAttrgroupRelationEntity.builder()
-                .attrId(attrVo.getAttrId())
-                .attrGroupId(attrVo.getAttrGroupId())
-                .build());
+        if (attrVo.getAttrType() == AttrConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
+            attrAttrgroupRelationService.save(AttrAttrgroupRelationEntity.builder()
+                    .attrId(attrEntity.getAttrId())
+                    .attrGroupId(attrVo.getAttrGroupId())
+                    .build());
+        }
+        return true;
     }
 
     @Override
@@ -179,14 +198,17 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         List<Long> catelogPath = categoryService.findCatelogPath(attrRespVo.getCatelogId());
         attrRespVo.setCatelogPath(catelogPath);
 
-        AttrAttrgroupRelationEntity relationEntity = attrAttrgroupRelationService.getOne(
-                Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class)
-                        .eq(AttrAttrgroupRelationEntity::getAttrId, attrRespVo.getAttrId())
-        );
-        if (relationEntity != null) {
-            AttrGroupEntity groupEntity = attrGroupService.getById(relationEntity.getAttrGroupId());
-            if (groupEntity != null) {
-                attrRespVo.setGroupName(groupEntity.getAttrGroupName());
+        // 如果是基本属性
+        if (attrEntity.getAttrType() == AttrConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
+            AttrAttrgroupRelationEntity relationEntity = attrAttrgroupRelationService.getOne(
+                    Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class)
+                            .eq(AttrAttrgroupRelationEntity::getAttrId, attrRespVo.getAttrId())
+            );
+            if (relationEntity != null) {
+                AttrGroupEntity groupEntity = attrGroupService.getById(relationEntity.getAttrGroupId());
+                if (groupEntity != null) {
+                    attrRespVo.setGroupName(groupEntity.getAttrGroupName());
+                }
             }
         }
 
@@ -196,17 +218,74 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updateDetail(AttrVo attrVo) {
-        // 先保存关系的属性组
-        attrAttrgroupRelationService.update(AttrAttrgroupRelationEntity.builder()
-                        .attrId(attrVo.getAttrId())
-                        .attrGroupId(attrVo.getAttrGroupId())
-                        .build(),
-                Wrappers.lambdaUpdate(AttrAttrgroupRelationEntity.class)
-                        .eq(AttrAttrgroupRelationEntity::getAttrId, attrVo.getAttrId()));
-
         AttrEntity attrEntity = new AttrEntity();
         BeanUtils.copyProperties(attrVo, attrEntity);
+
+        // 如果是基本属性
+        if (attrEntity.getAttrType() == AttrConstant.AttrEnum.ATTR_TYPE_BASE.getCode() && attrVo.getAttrGroupId() != null) {
+            // 先保存关系的属性组
+            attrAttrgroupRelationService.update(AttrAttrgroupRelationEntity.builder()
+                            .attrGroupId(attrVo.getAttrGroupId())
+                            .build(),
+                    Wrappers.lambdaUpdate(AttrAttrgroupRelationEntity.class)
+                            .eq(AttrAttrgroupRelationEntity::getAttrId, attrVo.getAttrId())
+                            .eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrVo.getAttrGroupId()));
+        }
         // 再保存基本信息
-        return this.save(attrEntity);
+        return this.update(attrEntity,
+                Wrappers.lambdaUpdate(AttrEntity.class)
+                        .eq(AttrEntity::getAttrId, attrVo.getAttrId()));
+    }
+
+    @Override
+    public List<AttrEntity> getAttrRelation(Long attrgroupId) {
+
+        List<AttrAttrgroupRelationEntity> relationEntityList = attrAttrgroupRelationService.list(
+                Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class)
+                        .eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrgroupId)
+        );
+        if (CollectionUtils.isEmpty(relationEntityList)) {
+            return null;
+        }
+
+        List<Long> attrIds = relationEntityList.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+
+        return this.listByIds(attrIds);
+    }
+
+    @Override
+    public PageUtils getAttrNoRelation(Map<String, Object> params, Long attrgroupId) {
+
+        AttrGroupEntity attrGroup = attrGroupService.getById(attrgroupId);
+        Long catelogId = attrGroup.getCatelogId();
+        // 该三级分类下全部的分组id
+        List<Long> attrGroupIds = attrGroupService.listObjs(
+                Wrappers.lambdaQuery(AttrGroupEntity.class)
+                        .eq(AttrGroupEntity::getCatelogId, catelogId)
+                , id -> (Long) id);
+        // 已经被分组关联的属性id
+        List<Long> attrIds = attrAttrgroupRelationService.listObjs(
+                Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class)
+                        .select(AttrAttrgroupRelationEntity::getAttrId)
+                        .in(AttrAttrgroupRelationEntity::getAttrGroupId, attrGroupIds)
+                , id -> (Long) id);
+
+        LambdaQueryWrapper<AttrEntity> queryWrapper = Wrappers.lambdaQuery(AttrEntity.class)
+                .eq(AttrEntity::getCatelogId, catelogId)
+                .eq(AttrEntity::getAttrType, AttrConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
+        // ids不为空则not in
+        if (!CollectionUtils.isEmpty(attrIds)) {
+            queryWrapper.notIn(AttrEntity::getAttrId, attrIds);
+        }
+        // 关键字查询
+        String key = (String) params.get("key");
+        if (StrUtil.isNotBlank(key)) {
+            queryWrapper.likeRight(AttrEntity::getAttrName, key);
+        }
+        IPage<AttrEntity> page = this.page(
+                new Query<AttrEntity>().getPage(params),
+                queryWrapper
+        );
+        return new PageUtils(page);
     }
 }

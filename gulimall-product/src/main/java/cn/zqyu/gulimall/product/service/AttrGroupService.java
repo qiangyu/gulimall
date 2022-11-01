@@ -1,6 +1,7 @@
 package cn.zqyu.gulimall.product.service;
 
 import cn.zqyu.gulimall.product.vo.AttrGroupWithAttrsVo;
+import cn.zqyu.gulimall.product.vo.AttrRelationVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.gulimall.product.entity.AttrGroupEntity;
@@ -35,15 +36,17 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     /**
      * <p>
-     * 根据分类id查询出分组已经分组关联的属性
+     * 批量保存分组与属性的关联关系
      *
      * </p>
      *
-     * @param catlogId catlogId
-     * @return java.util.List<cn.zqyu.gulimall.product.vo.AttrGroupWithAttrsVo> /
+     * @param attrRelationVos attrRelationVos
+     * @return boolean /
      * @author zq yu
-     * @since 2022/10/29 17:01
+     * @since 2022/11/1 17:41
      */
-    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatlogId(Long catlogId);
+    boolean saveBatchAttrRelation(AttrRelationVo[] attrRelationVos);
+
+    boolean deleteBatchAttrRelation(AttrRelationVo[] attrRelationVos);
 }
 

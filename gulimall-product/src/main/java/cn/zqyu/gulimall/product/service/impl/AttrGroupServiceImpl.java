@@ -4,12 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
 import cn.zqyu.gulimall.product.dao.AttrGroupDao;
-import cn.zqyu.gulimall.product.entity.AttrEntity;
+import cn.zqyu.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import cn.zqyu.gulimall.product.entity.AttrGroupEntity;
+import cn.zqyu.gulimall.product.service.AttrAttrgroupRelationService;
 import cn.zqyu.gulimall.product.service.AttrGroupService;
-import cn.zqyu.gulimall.product.service.AttrService;
-import cn.zqyu.gulimall.product.vo.AttrGroupWithAttrsVo;
-import cn.zqyu.gulimall.product.vo.AttrRespVo;
+import cn.zqyu.gulimall.product.vo.AttrRelationVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -19,8 +18,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 
@@ -28,7 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
 
-    private final AttrService attrService;
+    private final AttrAttrgroupRelationService attrAttrgroupRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -47,7 +50,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         LambdaQueryWrapper<AttrGroupEntity> queryWrapper = Wrappers.lambdaQuery(AttrGroupEntity.class)
                 .orderByAsc(AttrGroupEntity::getSort);
 
-        if (StrUtil.isNotBlank(catelogId)) {
+        if (StrUtil.isNotBlank(catelogId) && !"0".equals(catelogId)) {
             queryWrapper.eq(AttrGroupEntity::getCatelogId, catelogId);
         }
 
@@ -65,15 +68,30 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     }
 
     @Override
-    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatlogId(Long catlogId) {
-        List<AttrGroupEntity> attrGroupList = this.list(Wrappers.lambdaQuery(AttrGroupEntity.class).eq(AttrGroupEntity::getCatelogId, catlogId));
+    public boolean saveBatchAttrRelation(AttrRelationVo[] attrRelationVos) {
 
-        return attrGroupList.stream().map(attrGroup -> {
-            AttrGroupWithAttrsVo vo = new AttrGroupWithAttrsVo();
-            BeanUtils.copyProperties(attrGroup, vo);
-            List<AttrEntity> attrList = attrService.getRelationAttr(attrGroup.getCatelogId());
-            vo.setAttrs(attrList);
-            return  vo;
+        List<AttrAttrgroupRelationEntity> collect = Arrays.stream(attrRelationVos).map(attrRelationVo -> {
+
+            AttrAttrgroupRelationEntity relation = new AttrAttrgroupRelationEntity();
+            BeanUtils.copyProperties(attrRelationVo, relation);
+            relation.setAttrSort(0);
+            return relation;
         }).collect(Collectors.toList());
+
+        return attrAttrgroupRelationService.saveBatch(collect);
+    }
+
+    @Override
+    public boolean deleteBatchAttrRelation(AttrRelationVo[] attrRelationVos) {
+        // 为什么要分组？因为安装摸钱的需求来说，需要删除的分组都是同一个分组
+        Map<Long, List<Long>> groupIdAttrIdsMap = Arrays.stream(attrRelationVos).collect(Collectors.groupingBy(AttrRelationVo::getAttrGroupId, Collectors.mapping(AttrRelationVo::getAttrId, Collectors.toList())));
+        // 根据分组批量删除该分组的关联的属性
+        groupIdAttrIdsMap.forEach((groupId, attIds) -> attrAttrgroupRelationService.remove(
+                Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class)
+                        .eq(AttrAttrgroupRelationEntity::getAttrGroupId, groupId)
+                        .in(AttrAttrgroupRelationEntity::getAttrId, attIds)
+        ));
+
+        return true;
     }
 }
