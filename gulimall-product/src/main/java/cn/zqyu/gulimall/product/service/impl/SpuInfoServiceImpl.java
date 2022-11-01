@@ -1,14 +1,18 @@
 package cn.zqyu.gulimall.product.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.zqyu.common.to.product.SkuReductionTo;
+import cn.zqyu.common.to.product.SpuBoundTo;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
+import cn.zqyu.common.utils.R;
 import cn.zqyu.common.vo.product.BaseAttrs;
 import cn.zqyu.common.vo.product.Images;
 import cn.zqyu.common.vo.product.Skus;
 import cn.zqyu.common.vo.product.SpuSaveVO;
 import cn.zqyu.gulimall.product.dao.SpuInfoDao;
 import cn.zqyu.gulimall.product.entity.*;
+import cn.zqyu.gulimall.product.feign.FeignCoupon;
 import cn.zqyu.gulimall.product.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -39,6 +43,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     private final SkuInfoService skuInfoService;
     private final SkuImagesService skuImagesService;
     private final SkuSaleAttrValueService skuSaleAttrValueService;
+
+    private final FeignCoupon feignCoupon;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -76,8 +82,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 }).collect(Collectors.toList());
         spuImagesService.saveBatch(imagesEntityList);
 
-        // TODO 保存折扣信息
-
         // 保存spu的基本属性信息
         List<BaseAttrs> baseAttrsList = spuInfoVo.getBaseAttrs();
         if (baseAttrsList != null && !baseAttrsList.isEmpty()) {
@@ -101,6 +105,13 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             }
         }
 
+        // TODO 商品积分
+        SpuBoundTo spuBoundTo = new SpuBoundTo();
+        BeanUtils.copyProperties(spuInfoVo, spuBoundTo);
+        R responseBounds = feignCoupon.saveBounds(spuBoundTo);
+        if (responseBounds.getCode() != 0) {
+            throw new IllegalArgumentException("远程feign调用bounds失败");
+        }
 
         List<Skus> skusList = spuInfoVo.getSkus();
         for (Skus skus : skusList) {
@@ -143,10 +154,14 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                     }).collect(Collectors.toList());
             skuSaleAttrValueService.saveBatch(skuSaleAttrValueEntityList);
 
-            // TODO 会员价格，会员积分
-
+            // TODO 保存折扣信息、会员价格
+            SkuReductionTo skuReductionTo = new SkuReductionTo();
+            BeanUtils.copyProperties(skus, skuReductionTo);
+            R responseCoupon = feignCoupon.saveCoupon(skuReductionTo);
+            if (responseCoupon.getCode() != 0) {
+                throw new IllegalArgumentException("远程feign调用coupon失败");
+            }
         }
-
 
     }
 

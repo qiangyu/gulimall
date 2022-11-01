@@ -9,7 +9,7 @@ import java.util.List;
  * 满件数打折、满金额优惠、会员价格
  */
 @Data
-public class SkuReductionTO {
+public class SkuReductionTo {
     private Long skuId;
     private int fullCount;// 满件数
     private BigDecimal discount;// 折扣

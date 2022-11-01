@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 商品信息TO
  */
 @Data
-public class SkuInfoTO implements Serializable {
+public class SkuInfoTo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long skuId;

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  **/
 
 @Data
-public class SeckillSkuTO {
+public class SeckillSkuTo {
     private Long id;
     /**
      * 活动id
