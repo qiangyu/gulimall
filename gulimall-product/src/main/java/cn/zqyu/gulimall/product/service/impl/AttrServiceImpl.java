@@ -228,8 +228,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                             .attrGroupId(attrVo.getAttrGroupId())
                             .build(),
                     Wrappers.lambdaUpdate(AttrAttrgroupRelationEntity.class)
-                            .eq(AttrAttrgroupRelationEntity::getAttrId, attrVo.getAttrId())
-                            .eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrVo.getAttrGroupId()));
+                            .eq(AttrAttrgroupRelationEntity::getAttrId, attrVo.getAttrId()));
         }
         // 再保存基本信息
         return this.update(attrEntity,
