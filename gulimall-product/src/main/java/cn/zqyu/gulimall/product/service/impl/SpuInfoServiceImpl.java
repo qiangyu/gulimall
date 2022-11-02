@@ -6,10 +6,7 @@ import cn.zqyu.common.to.product.SpuBoundTo;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
 import cn.zqyu.common.utils.R;
-import cn.zqyu.common.vo.product.BaseAttrs;
-import cn.zqyu.common.vo.product.Images;
-import cn.zqyu.common.vo.product.Skus;
-import cn.zqyu.common.vo.product.SpuSaveVO;
+import cn.zqyu.common.vo.product.*;
 import cn.zqyu.gulimall.product.dao.SpuInfoDao;
 import cn.zqyu.gulimall.product.entity.*;
 import cn.zqyu.gulimall.product.feign.FeignCoupon;
@@ -106,8 +103,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }
 
         // TODO 商品积分
+        Bounds infoVoBounds = spuInfoVo.getBounds();
         SpuBoundTo spuBoundTo = new SpuBoundTo();
-        BeanUtils.copyProperties(spuInfoVo, spuBoundTo);
+        BeanUtils.copyProperties(infoVoBounds, spuBoundTo);
+        spuBoundTo.setSpuId(spuInfoEntity.getId());
         R responseBounds = feignCoupon.saveBounds(spuBoundTo);
         if (responseBounds.getCode() != 0) {
             throw new IllegalArgumentException("远程feign调用bounds失败");

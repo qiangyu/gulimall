@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,16 +50,20 @@ public class CouponReductionServiceImpl implements CouponReductionService {
     @Override
     public void saveReductionInfo(SkuReductionTo skuReductionTo) {
         // 保存满几件，打几折信息
-        SkuFullReductionEntity skuFullReductionEntity = new SkuFullReductionEntity();
-        BeanUtils.copyProperties(skuReductionTo, skuFullReductionEntity);
-        skuFullReductionEntity.setAddOther(skuReductionTo.getCountStatus());
-        skuFullReductionService.save(skuFullReductionEntity);
+        if (skuReductionTo.getFullCount() > 0) {
+            SkuFullReductionEntity skuFullReductionEntity = new SkuFullReductionEntity();
+            BeanUtils.copyProperties(skuReductionTo, skuFullReductionEntity);
+            skuFullReductionEntity.setAddOther(skuReductionTo.getCountStatus());
+            skuFullReductionService.save(skuFullReductionEntity);
+        }
 
         // 保存满金额，优惠多少金额
-        SkuLadderEntity skuLadderEntity = new SkuLadderEntity();
-        BeanUtils.copyProperties(skuReductionTo, skuLadderEntity);
-        skuLadderEntity.setAddOther(skuReductionTo.getPriceStatus());
-        skuLadderService.save(skuLadderEntity);
+        if (skuReductionTo.getFullPrice().compareTo(new BigDecimal(0)) >= 1) {
+            SkuLadderEntity skuLadderEntity = new SkuLadderEntity();
+            BeanUtils.copyProperties(skuReductionTo, skuLadderEntity);
+            skuLadderEntity.setAddOther(skuReductionTo.getPriceStatus());
+            skuLadderService.save(skuLadderEntity);
+        }
 
         // 保存会员价格
         List<MemberPriceEntity> memberPriceEntityList = Optional.ofNullable(skuReductionTo.getMemberPrice()).map(List::stream).orElseGet(Stream::empty)
@@ -69,7 +74,9 @@ public class CouponReductionServiceImpl implements CouponReductionService {
                     memberPriceEntity.setMemberLevelName(memberPrice.getName());
                     memberPriceEntity.setMemberPrice(memberPrice.getPrice());
                     return memberPriceEntity;
-                }).collect(Collectors.toList());
+                })
+                .filter(memberPrice -> memberPrice.getMemberPrice().compareTo(new BigDecimal(0)) >= 1)
+                .collect(Collectors.toList());
         memberPriceService.saveBatch(memberPriceEntityList);
 
     }

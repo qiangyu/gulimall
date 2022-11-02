@@ -60,7 +60,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return attrGroupList.stream().map(attrGroup -> {
             AttrGroupWithAttrsVo vo = new AttrGroupWithAttrsVo();
             BeanUtils.copyProperties(attrGroup, vo);
-            List<AttrEntity> attrList = this.getRelationAttr(attrGroup.getCatelogId());
+            List<AttrEntity> attrList = this.getRelationAttr(attrGroup.getAttrGroupId());
             vo.setAttrs(attrList);
             return vo;
         }).collect(Collectors.toList());
