@@ -11,8 +11,10 @@ import cn.zqyu.gulimall.product.dao.SpuInfoDao;
 import cn.zqyu.gulimall.product.entity.*;
 import cn.zqyu.gulimall.product.feign.FeignCoupon;
 import cn.zqyu.gulimall.product.service.*;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -45,9 +47,28 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        LambdaQueryWrapper<SpuInfoEntity> queryWrapper = Wrappers.lambdaQuery(SpuInfoEntity.class);
+
+        String key = (String) params.get("key");
+        if (StrUtil.isNotBlank(key)) {
+            queryWrapper.likeRight(SpuInfoEntity::getSpuName, key);
+        }
+        String status = (String) params.get("status");
+        if (StrUtil.isNotBlank(status)) {
+            queryWrapper.eq(SpuInfoEntity::getPublishStatus, status);
+        }
+        String brandId = (String) params.get("brandId");
+        if (StrUtil.isNotBlank(brandId) && !StrUtil.equals("0", brandId)) {
+            queryWrapper.eq(SpuInfoEntity::getBrandId, brandId);
+        }
+        String catelogId = (String) params.get("catelogId");
+        if (StrUtil.isNotBlank(catelogId) && !StrUtil.equals("0", catelogId)) {
+            queryWrapper.eq(SpuInfoEntity::getCatalogId, catelogId);
+        }
+
         IPage<SpuInfoEntity> page = this.page(
                 new Query<SpuInfoEntity>().getPage(params),
-                new QueryWrapper<SpuInfoEntity>()
+                queryWrapper
         );
 
         return new PageUtils(page);
