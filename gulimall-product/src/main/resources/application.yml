@@ -13,6 +13,10 @@ spring:
     nacos:
       server-addr: 127.0.0.1:8848
 
+  # 添加spring的统一时间转换
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
 mybatis-plus:
   global-config:
     db-config:
