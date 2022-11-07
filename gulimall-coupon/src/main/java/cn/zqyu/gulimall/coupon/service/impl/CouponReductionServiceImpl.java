@@ -2,7 +2,6 @@ package cn.zqyu.gulimall.coupon.service.impl;
 
 import cn.zqyu.common.to.product.SkuReductionTo;
 import cn.zqyu.common.to.product.SpuBoundTo;
-import cn.zqyu.common.utils.R;
 import cn.zqyu.gulimall.coupon.entity.MemberPriceEntity;
 import cn.zqyu.gulimall.coupon.entity.SkuFullReductionEntity;
 import cn.zqyu.gulimall.coupon.entity.SkuLadderEntity;
