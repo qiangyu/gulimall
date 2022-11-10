@@ -10,7 +10,7 @@ public class PurchaseConstant {
         RECEIVE(2, "已领取"),
         FINISH(3, "已完成"),
         HASERROR(4, "有异常");
-        private int code;
+        private Integer code;
         private String msg;
 
         PurchaseStatusEnum(int code, String msg) {
@@ -18,14 +18,13 @@ public class PurchaseConstant {
             this.msg = msg;
         }
 
-        public int getCode() {
+        public Integer getCode() {
             return code;
         }
 
         public String getMsg() {
             return msg;
         }
-
     }
 
     /**
@@ -38,7 +37,7 @@ public class PurchaseConstant {
         FINISH(3, "已完成"),
         HASERROR(4, "采购失败");
 
-        private int code;
+        private Integer code;
         private String msg;
 
         PurchaseDetailStatusEnum(int code, String msg) {
@@ -46,13 +45,12 @@ public class PurchaseConstant {
             this.msg = msg;
         }
 
-        public int getCode() {
+        public Integer getCode() {
             return code;
         }
 
         public String getMsg() {
             return msg;
         }
-
     }
 }

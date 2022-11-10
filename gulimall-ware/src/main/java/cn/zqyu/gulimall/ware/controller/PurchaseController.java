@@ -1,14 +1,13 @@
 package cn.zqyu.gulimall.ware.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import cn.zqyu.gulimall.ware.vo.MergePurchaseItemVo;
+import cn.zqyu.gulimall.ware.vo.PurchaseDoneVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.zqyu.gulimall.ware.entity.PurchaseEntity;
 import cn.zqyu.gulimall.ware.service.PurchaseService;
@@ -31,12 +30,48 @@ public class PurchaseController {
 
     private final PurchaseService purchaseService;
 
+    @PostMapping("/done")
+    public R purchaseDone(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        purchaseService.purchaseDone(purchaseDoneVo);
+        return R.ok();
+    }
+
+    @PostMapping("/received")
+    public R received(@RequestBody List<Long> purchaseIds) {
+        purchaseService.received(purchaseIds);
+        return R.ok();
+    }
+
+    @PostMapping("/merge")
+    public R mergePurchaseItem(@RequestBody MergePurchaseItemVo mergePurchaseItemVo) {
+        purchaseService.mergePurchaseItem(mergePurchaseItemVo);
+        return R.ok();
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = purchaseService.queryPage(params);
+
+        return R.ok().put("page", page);
+    }
+
+    /**
+     * <p>
+     * 获取新建和已分配状态的采购单
+     *
+     * </p>
+     *
+     * @param params params
+     * @return cn.zqyu.common.utils.R /
+     * @author zq yu 
+     * @since 2022/11/10 15:53 
+     */
+    @RequestMapping("/unreceive/list")
+    public R getUnReceiveList(@RequestParam Map<String, Object> params){
+        PageUtils page = purchaseService.queryPageUnReceiveList(params);
 
         return R.ok().put("page", page);
     }

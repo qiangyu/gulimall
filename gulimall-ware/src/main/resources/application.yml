@@ -10,6 +10,10 @@ spring:
     username: root
     password: xiaoyu
 
+  # 添加spring的统一时间转换
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
 mybatis-plus:
   global-config:
     db-config:
