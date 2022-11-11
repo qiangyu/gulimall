@@ -59,8 +59,8 @@ public class SkuInfoController {
      * @author zq yu
      * @since 2022/11/11 11:07
      */
-    @PostMapping("/info")
-    public R getSkuInfo(List<Long> skuIds){
+    @PostMapping("/info/list")
+    public R getSkuInfo(@RequestBody List<Long> skuIds){
         List<SkuInfoEntity> list = skuInfoService.listByIds(skuIds);
 
         return R.ok().put("skuInfoList", list);

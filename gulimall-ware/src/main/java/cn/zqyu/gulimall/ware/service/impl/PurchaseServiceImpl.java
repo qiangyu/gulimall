@@ -203,6 +203,8 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
                 .collect(Collectors.toList());
         purchaseDetailService.updateBatchById(updatePurchaseDetailCollect);
 
+        // TODO 如果采购失败，其原因没保存，如果实际采购数和所需采购数不用，也需要做调整
+        // 这里先把所有的采购项传过去保存
         // 封装库存信息
         List<WareSkuEntity> wareSkuList = purchaseDetailList.stream()
                 .map(item -> WareSkuEntity.builder()

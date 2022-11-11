@@ -1,6 +1,7 @@
 package cn.zqyu.gulimall.ware.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.zqyu.common.constant.ware.PurchaseConstant;
 import cn.zqyu.common.entity.product.SkuInfoEntity;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
@@ -86,7 +87,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         List<SkuInfoEntity> skuInfoList = null;
         try {
             R feignSkuInfo = skuInfoFeign.getSkuInfo(skuIds);
-            if (feignSkuInfo.getCode() != 0) {
+            if (feignSkuInfo.getCode() == 0) {
                 skuInfoList = feignSkuInfo.getData("skuInfoList", new TypeReference<List<SkuInfoEntity>>(){});
             }
         } catch (Exception e) {
@@ -113,7 +114,9 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 .filter(item -> skuIdWareIdMap.containsKey(item.getSkuId()))
                 .peek(item -> item.setId(skuIdWareIdMap.get(item.getSkuId())))
                 .collect(Collectors.toList());
-        wareSkuDao.addStockBatchById(skuCollect);
+        if (!skuCollect.isEmpty()) {
+            wareSkuDao.addStockBatchById(skuCollect);
+        }
 
         return true;
     }

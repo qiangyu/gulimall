@@ -3,6 +3,7 @@ package cn.zqyu.gulimall.ware.dao;
 import cn.zqyu.gulimall.ware.entity.WareSkuEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +17,6 @@ import java.util.List;
 @Mapper
 public interface WareSkuDao extends BaseMapper<WareSkuEntity> {
 
-    int addStockBatchById(List<WareSkuEntity> wareSkuList);
+    int addStockBatchById(@Param("wareSkuList") List<WareSkuEntity> wareSkuList);
 	
 }

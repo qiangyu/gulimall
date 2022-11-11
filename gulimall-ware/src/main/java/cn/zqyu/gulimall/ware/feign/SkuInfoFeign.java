@@ -3,6 +3,7 @@ package cn.zqyu.gulimall.ware.feign;
 import cn.zqyu.common.utils.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface SkuInfoFeign {
      * @author zq yu
      * @since 2022/11/11 11:07
      */
-    @PostMapping("/info")
-    R getSkuInfo(List<Long> skuIds);
+    @PostMapping("/product/skuinfo/info/list")
+    R getSkuInfo(@RequestBody List<Long> skuIds);
 
 }

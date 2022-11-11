@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 商品库存
@@ -16,6 +18,8 @@ import lombok.Data;
  * @email me@zqyu.cn
  * @date 2022-09-21 21:59:49
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
 @TableName("wms_ware_sku")

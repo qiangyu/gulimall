@@ -14,8 +14,8 @@
     </resultMap>
 
     <update id="addStockBatchById">
-        <foreach collection="wareSkuList" open="(" close=")" separator="; " item="item">
-            UPDATE `wms_ware_sku` SET stock = stock + #{item.getStock} WHERE id = #{item.getId}
+        <foreach collection="wareSkuList" close=";" separator="; " item="item">
+            UPDATE `wms_ware_sku` SET stock = stock + #{item.stock} WHERE id = #{item.id}
         </foreach>
     </update>
 
