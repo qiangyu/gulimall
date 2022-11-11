@@ -1,11 +1,15 @@
 package cn.zqyu.gulimall.ware.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.zqyu.common.entity.product.SkuInfoEntity;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.common.utils.Query;
+import cn.zqyu.common.utils.R;
 import cn.zqyu.gulimall.ware.dao.WareSkuDao;
 import cn.zqyu.gulimall.ware.entity.WareSkuEntity;
+import cn.zqyu.gulimall.ware.feign.SkuInfoFeign;
 import cn.zqyu.gulimall.ware.service.WareSkuService;
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -25,6 +29,8 @@ import java.util.stream.Stream;
 public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> implements WareSkuService {
 
     private final WareSkuDao wareSkuDao;
+
+    private final SkuInfoFeign skuInfoFeign;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -76,12 +82,28 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 .orElseGet(Stream::empty)
                 .collect(Collectors.toMap(WareSkuEntity::getSkuId, WareSkuEntity::getId));
 
+        // 远程调用product服务，根据sku id获取sku详细信息
+        List<SkuInfoEntity> skuInfoList = null;
+        try {
+            R feignSkuInfo = skuInfoFeign.getSkuInfo(skuIds);
+            if (feignSkuInfo.getCode() != 0) {
+                skuInfoList = feignSkuInfo.getData("skuInfoList", new TypeReference<List<SkuInfoEntity>>(){});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // id：name封装map
+        Map<Long, String> skuIdNameMap = Optional.ofNullable(skuInfoList)
+                .map(List::stream)
+                .orElseGet(Stream::empty)
+                .collect(Collectors.toMap(SkuInfoEntity::getSkuId, SkuInfoEntity::getSkuName));
+
         // 当map不包含sku id时，是新增sku库存
         List<WareSkuEntity> notSkuCollect = wareSkuList.stream()
                 .filter(item -> !skuIdWareIdMap.containsKey(item.getSkuId()))
                 .peek(item -> {
-                    // TODO
-                    // item.setSkuName();
+                    // 设置sku的名称
+                    item.setSkuName(skuIdNameMap.get(item.getSkuId()));
                 })
                 .collect(Collectors.toList());
         this.saveBatch(notSkuCollect);

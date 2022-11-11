@@ -1,16 +1,15 @@
 package cn.zqyu.gulimall.product.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
+import cn.zqyu.common.utils.PageUtils;
+import cn.zqyu.common.utils.R;
+import cn.zqyu.gulimall.product.entity.SkuInfoEntity;
+import cn.zqyu.gulimall.product.service.SkuInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import cn.zqyu.gulimall.product.entity.SkuInfoEntity;
-import cn.zqyu.gulimall.product.service.SkuInfoService;
-import cn.zqyu.common.utils.PageUtils;
-import cn.zqyu.common.utils.R;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -49,9 +48,20 @@ public class SkuInfoController {
         return R.ok().put("skuInfo", skuInfo);
     }
 
+    /**
+     * <p>
+     * 根据sku ids集合获取sku详细信息
+     *
+     * </p>
+     *
+     * @param skuIds skuIds
+     * @return cn.zqyu.common.utils.R /
+     * @author zq yu
+     * @since 2022/11/11 11:07
+     */
     @PostMapping("/info")
-    public R info(List<Long> skuId){
-        List<SkuInfoEntity> list = skuInfoService.listByIds(skuId);
+    public R getSkuInfo(List<Long> skuIds){
+        List<SkuInfoEntity> list = skuInfoService.listByIds(skuIds);
 
         return R.ok().put("skuInfoList", list);
     }
