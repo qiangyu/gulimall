@@ -63,6 +63,7 @@ public interface PurchaseService extends IService<PurchaseEntity> {
     /**
      * <p>
      * 完成采购单的采购
+     *      TODO 这里没有校验领取采购单人是否为采购单分配的人
      *
      * </p>
      *
