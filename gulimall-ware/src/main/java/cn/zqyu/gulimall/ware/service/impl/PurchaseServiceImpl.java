@@ -6,8 +6,10 @@ import cn.zqyu.common.utils.Query;
 import cn.zqyu.gulimall.ware.dao.PurchaseDao;
 import cn.zqyu.gulimall.ware.entity.PurchaseDetailEntity;
 import cn.zqyu.gulimall.ware.entity.PurchaseEntity;
+import cn.zqyu.gulimall.ware.entity.WareSkuEntity;
 import cn.zqyu.gulimall.ware.service.PurchaseDetailService;
 import cn.zqyu.gulimall.ware.service.PurchaseService;
+import cn.zqyu.gulimall.ware.service.WareSkuService;
 import cn.zqyu.gulimall.ware.vo.MergePurchaseItemVo;
 import cn.zqyu.gulimall.ware.vo.PurchaseDoneVo;
 import cn.zqyu.gulimall.ware.vo.PurchaseItemDoneVo;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,6 +34,8 @@ import java.util.stream.Stream;
 public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity> implements PurchaseService {
 
     private final PurchaseDetailService purchaseDetailService;
+
+    private final WareSkuService wareSkuService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -176,9 +181,7 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
         }
 
         // 过滤是否全部采购项正常采购
-        boolean purchaseStatusAllMatch = purchaseDetailList.stream().allMatch(item -> {
-            return PurchaseConstant.PurchaseDetailStatusEnum.BUYING.getCode().equals(item.getStatus());
-        });
+        boolean purchaseStatusAllMatch = purchaseDetailList.stream().allMatch(item -> PurchaseConstant.PurchaseDetailStatusEnum.BUYING.getCode().equals(item.getStatus()));
         if (!purchaseStatusAllMatch) {
             throw new IllegalArgumentException("采购项中有状态不是: ".concat(PurchaseConstant.PurchaseDetailStatusEnum.BUYING.getMsg()).concat("，请联系管理员"));
         }
@@ -192,11 +195,27 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
                 .build());
 
         // 更新采购项状态
-        List<PurchaseDetailEntity> updatePurchaseDetailCollect = items.stream().map(item -> PurchaseDetailEntity.builder()
-                .id(item.getItemId())
-                .status(item.getStatus())
-                .build()).collect(Collectors.toList());
-        return purchaseDetailService.updateBatchById(updatePurchaseDetailCollect);
+        List<PurchaseDetailEntity> updatePurchaseDetailCollect = items.stream()
+                .map(item -> PurchaseDetailEntity.builder()
+                        .id(item.getItemId())
+                        .status(item.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+        purchaseDetailService.updateBatchById(updatePurchaseDetailCollect);
+
+        // 封装库存信息
+        List<WareSkuEntity> wareSkuList = purchaseDetailList.stream()
+                .map(item -> WareSkuEntity.builder()
+                        .skuId(item.getSkuId())
+                        .wareId(item.getWareId())
+                        .stock(item.getSkuNum())
+                        .build())
+                .collect(Collectors.toList());
+        // 添加采购项的库存
+        wareSkuService.addStockBatch(wareSkuList);
+
+
+        return true;
     }
 
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import cn.zqyu.common.utils.PageUtils;
 import cn.zqyu.gulimall.ware.entity.WareSkuEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,18 @@ import java.util.Map;
 public interface WareSkuService extends IService<WareSkuEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+    
+    /**
+     * <p>
+     * 批量添加库存
+     *
+     * </p>
+     *
+     * @param wareSkuList wareSkuList
+     * @return boolean /
+     * @author zq yu 
+     * @since 2022/11/11 10:19
+     */
+    boolean addStockBatch(List<WareSkuEntity> wareSkuList);
 }
 

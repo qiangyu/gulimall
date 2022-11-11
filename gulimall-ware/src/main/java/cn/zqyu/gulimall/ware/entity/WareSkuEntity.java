@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -14,6 +16,7 @@ import lombok.Data;
  * @email me@zqyu.cn
  * @date 2022-09-21 21:59:49
  */
+@Builder
 @Data
 @TableName("wms_ware_sku")
 public class WareSkuEntity implements Serializable {

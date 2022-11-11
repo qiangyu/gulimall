@@ -13,5 +13,11 @@
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
 
+    <update id="addStockBatchById">
+        <foreach collection="wareSkuList" open="(" close=")" separator="; " item="item">
+            UPDATE `wms_ware_sku` SET stock = stock + #{item.getStock} WHERE id = #{item.getId}
+        </foreach>
+    </update>
+
 
 </mapper>
