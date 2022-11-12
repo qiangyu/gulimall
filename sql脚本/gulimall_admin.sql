@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.56.10
+ Source Server         : 腾讯云
  Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : 192.168.56.10:3306
+ Source Server Version : 50739
+ Source Host           : 43.139.28.47:3306
  Source Schema         : gulimall_admin
 
  Target Server Type    : MySQL
- Target Server Version : 50735
+ Target Server Version : 50739
  File Encoding         : 65001
 
- Date: 17/03/2022 22:14:03
+ Date: 13/11/2022 00:03:40
 */
 
 SET NAMES utf8mb4;
@@ -154,7 +154,7 @@ CREATE TABLE `QRTZ_SCHEDULER_STATE`  (
 -- ----------------------------
 -- Records of QRTZ_SCHEDULER_STATE
 -- ----------------------------
-INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('RenrenScheduler', 'WANZENGHUI-Z5901645711864330', 1645712156610, 15000);
+INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('RenrenScheduler', 'LAPTOP-EATFTP3Q1668265920999', 1668269010813, 15000);
 
 -- ----------------------------
 -- Table structure for QRTZ_SIMPLE_TRIGGERS
@@ -234,7 +234,7 @@ CREATE TABLE `QRTZ_TRIGGERS`  (
 -- ----------------------------
 -- Records of QRTZ_TRIGGERS
 -- ----------------------------
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('RenrenScheduler', 'TASK_1', 'DEFAULT', 'TASK_1', 'DEFAULT', NULL, 1645713000000, -1, 5, 'WAITING', 'CRON', 1630508723000, 0, NULL, 2, 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000D4A4F425F504152414D5F4B45597372002E696F2E72656E72656E2E6D6F64756C65732E6A6F622E656E746974792E5363686564756C654A6F62456E7469747900000000000000010200074C00086265616E4E616D657400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000E63726F6E45787072657373696F6E71007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C0006706172616D7371007E00094C000672656D61726B71007E00094C00067374617475737400134C6A6176612F6C616E672F496E74656765723B7870740008746573745461736B7372000E6A6176612E7574696C2E44617465686A81014B597419030000787077080000017BA02CE1487874000E3020302F3330202A202A202A203F7372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B0200007870000000000000000174000672656E72656E74000CE58F82E695B0E6B58BE8AF95737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C75657871007E0013000000007800);
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('RenrenScheduler', 'TASK_1', 'DEFAULT', 'TASK_1', 'DEFAULT', NULL, 1668270600000, 1668268800000, 5, 'WAITING', 'CRON', 1630508723000, 0, NULL, 2, 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000D4A4F425F504152414D5F4B45597372002E696F2E72656E72656E2E6D6F64756C65732E6A6F622E656E746974792E5363686564756C654A6F62456E7469747900000000000000010200074C00086265616E4E616D657400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000E63726F6E45787072657373696F6E71007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C0006706172616D7371007E00094C000672656D61726B71007E00094C00067374617475737400134C6A6176612F6C616E672F496E74656765723B7870740008746573745461736B7372000E6A6176612E7574696C2E44617465686A81014B597419030000787077080000017BA02CE1487874000E3020302F3330202A202A202A203F7372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B0200007870000000000000000174000672656E72656E74000CE58F82E695B0E6B58BE8AF95737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C75657871007E0013000000007800);
 
 -- ----------------------------
 -- Table structure for schedule_job
@@ -271,7 +271,7 @@ CREATE TABLE `schedule_job_log`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`log_id`) USING BTREE,
   INDEX `job_id`(`job_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 284 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务日志' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 384 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of schedule_job_log
@@ -559,6 +559,106 @@ INSERT INTO `schedule_job_log` VALUES (280, 1, 'testTask', 'renren', 0, NULL, 1,
 INSERT INTO `schedule_job_log` VALUES (281, 1, 'testTask', 'renren', 0, NULL, 1, '2022-01-08 21:00:00');
 INSERT INTO `schedule_job_log` VALUES (282, 1, 'testTask', 'renren', 0, NULL, 1, '2022-01-08 21:30:00');
 INSERT INTO `schedule_job_log` VALUES (283, 1, 'testTask', 'renren', 0, NULL, 1, '2022-01-08 22:00:00');
+INSERT INTO `schedule_job_log` VALUES (284, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-22 22:30:00');
+INSERT INTO `schedule_job_log` VALUES (285, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-22 23:00:00');
+INSERT INTO `schedule_job_log` VALUES (286, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-22 23:30:00');
+INSERT INTO `schedule_job_log` VALUES (287, 1, 'testTask', 'renren', 0, NULL, 8, '2022-09-23 00:00:00');
+INSERT INTO `schedule_job_log` VALUES (288, 1, 'testTask', 'renren', 0, NULL, 2, '2022-09-23 09:00:00');
+INSERT INTO `schedule_job_log` VALUES (289, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-23 09:30:00');
+INSERT INTO `schedule_job_log` VALUES (290, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 12:30:00');
+INSERT INTO `schedule_job_log` VALUES (291, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-24 13:00:00');
+INSERT INTO `schedule_job_log` VALUES (292, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 13:30:00');
+INSERT INTO `schedule_job_log` VALUES (293, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-24 14:00:00');
+INSERT INTO `schedule_job_log` VALUES (294, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 14:30:00');
+INSERT INTO `schedule_job_log` VALUES (295, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 15:00:00');
+INSERT INTO `schedule_job_log` VALUES (296, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 15:30:00');
+INSERT INTO `schedule_job_log` VALUES (297, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 16:00:00');
+INSERT INTO `schedule_job_log` VALUES (298, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 16:30:00');
+INSERT INTO `schedule_job_log` VALUES (299, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 17:00:00');
+INSERT INTO `schedule_job_log` VALUES (300, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 17:30:00');
+INSERT INTO `schedule_job_log` VALUES (301, 1, 'testTask', 'renren', 0, NULL, 2, '2022-09-24 18:00:00');
+INSERT INTO `schedule_job_log` VALUES (302, 1, 'testTask', 'renren', 0, NULL, 2, '2022-09-24 18:30:00');
+INSERT INTO `schedule_job_log` VALUES (303, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 19:00:00');
+INSERT INTO `schedule_job_log` VALUES (304, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-24 19:30:00');
+INSERT INTO `schedule_job_log` VALUES (305, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-24 20:00:00');
+INSERT INTO `schedule_job_log` VALUES (306, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 16:30:00');
+INSERT INTO `schedule_job_log` VALUES (307, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-25 17:00:00');
+INSERT INTO `schedule_job_log` VALUES (308, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-25 17:30:00');
+INSERT INTO `schedule_job_log` VALUES (309, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-25 18:00:00');
+INSERT INTO `schedule_job_log` VALUES (310, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 18:30:00');
+INSERT INTO `schedule_job_log` VALUES (311, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 19:00:00');
+INSERT INTO `schedule_job_log` VALUES (312, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 19:30:00');
+INSERT INTO `schedule_job_log` VALUES (313, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 20:00:00');
+INSERT INTO `schedule_job_log` VALUES (314, 1, 'testTask', 'renren', 0, NULL, 2, '2022-09-25 20:30:00');
+INSERT INTO `schedule_job_log` VALUES (315, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-25 21:00:00');
+INSERT INTO `schedule_job_log` VALUES (316, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 21:30:00');
+INSERT INTO `schedule_job_log` VALUES (317, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 22:00:00');
+INSERT INTO `schedule_job_log` VALUES (318, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-25 22:30:00');
+INSERT INTO `schedule_job_log` VALUES (319, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-25 23:00:00');
+INSERT INTO `schedule_job_log` VALUES (320, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-26 10:00:00');
+INSERT INTO `schedule_job_log` VALUES (321, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-26 10:30:00');
+INSERT INTO `schedule_job_log` VALUES (322, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-26 11:00:00');
+INSERT INTO `schedule_job_log` VALUES (323, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-26 11:30:00');
+INSERT INTO `schedule_job_log` VALUES (324, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-26 12:00:00');
+INSERT INTO `schedule_job_log` VALUES (325, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-26 12:30:00');
+INSERT INTO `schedule_job_log` VALUES (326, 1, 'testTask', 'renren', 0, NULL, 2, '2022-09-26 13:00:00');
+INSERT INTO `schedule_job_log` VALUES (327, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-26 14:00:00');
+INSERT INTO `schedule_job_log` VALUES (328, 1, 'testTask', 'renren', 0, NULL, 0, '2022-09-28 11:30:00');
+INSERT INTO `schedule_job_log` VALUES (329, 1, 'testTask', 'renren', 0, NULL, 1, '2022-09-28 12:00:00');
+INSERT INTO `schedule_job_log` VALUES (330, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-04 22:30:00');
+INSERT INTO `schedule_job_log` VALUES (331, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-04 23:00:00');
+INSERT INTO `schedule_job_log` VALUES (332, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-04 23:30:00');
+INSERT INTO `schedule_job_log` VALUES (333, 1, 'testTask', 'renren', 0, NULL, 21, '2022-10-05 00:00:00');
+INSERT INTO `schedule_job_log` VALUES (334, 1, 'testTask', 'renren', 0, NULL, 0, '2022-10-13 12:00:00');
+INSERT INTO `schedule_job_log` VALUES (335, 1, 'testTask', 'renren', 0, NULL, 0, '2022-10-13 12:30:00');
+INSERT INTO `schedule_job_log` VALUES (336, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-13 14:30:00');
+INSERT INTO `schedule_job_log` VALUES (337, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-13 15:00:00');
+INSERT INTO `schedule_job_log` VALUES (338, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-13 22:00:00');
+INSERT INTO `schedule_job_log` VALUES (339, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-13 22:30:00');
+INSERT INTO `schedule_job_log` VALUES (340, 1, 'testTask', 'renren', 0, NULL, 0, '2022-10-13 23:00:00');
+INSERT INTO `schedule_job_log` VALUES (341, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-13 23:30:00');
+INSERT INTO `schedule_job_log` VALUES (342, 1, 'testTask', 'renren', 0, NULL, 0, '2022-10-29 16:30:00');
+INSERT INTO `schedule_job_log` VALUES (343, 1, 'testTask', 'renren', 0, NULL, 0, '2022-10-29 17:00:00');
+INSERT INTO `schedule_job_log` VALUES (344, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-29 17:30:00');
+INSERT INTO `schedule_job_log` VALUES (345, 1, 'testTask', 'renren', 0, NULL, 2, '2022-10-29 18:00:00');
+INSERT INTO `schedule_job_log` VALUES (346, 1, 'testTask', 'renren', 0, NULL, 1, '2022-10-29 18:30:00');
+INSERT INTO `schedule_job_log` VALUES (347, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-01 15:00:01');
+INSERT INTO `schedule_job_log` VALUES (348, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-01 15:30:01');
+INSERT INTO `schedule_job_log` VALUES (349, 1, 'testTask', 'renren', 0, NULL, 2, '2022-11-01 16:00:01');
+INSERT INTO `schedule_job_log` VALUES (350, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-01 17:00:01');
+INSERT INTO `schedule_job_log` VALUES (351, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-01 17:30:01');
+INSERT INTO `schedule_job_log` VALUES (352, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-01 20:00:00');
+INSERT INTO `schedule_job_log` VALUES (353, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-01 20:30:00');
+INSERT INTO `schedule_job_log` VALUES (354, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-01 21:00:00');
+INSERT INTO `schedule_job_log` VALUES (355, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-01 21:30:00');
+INSERT INTO `schedule_job_log` VALUES (356, 1, 'testTask', 'renren', 0, NULL, 2, '2022-11-01 22:00:00');
+INSERT INTO `schedule_job_log` VALUES (357, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-01 22:30:01');
+INSERT INTO `schedule_job_log` VALUES (358, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-01 23:00:00');
+INSERT INTO `schedule_job_log` VALUES (359, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-02 20:00:01');
+INSERT INTO `schedule_job_log` VALUES (360, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-02 20:30:01');
+INSERT INTO `schedule_job_log` VALUES (361, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-07 17:30:01');
+INSERT INTO `schedule_job_log` VALUES (362, 1, 'testTask', 'renren', 0, NULL, 3, '2022-11-08 10:00:01');
+INSERT INTO `schedule_job_log` VALUES (363, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-08 10:30:01');
+INSERT INTO `schedule_job_log` VALUES (364, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-08 11:00:01');
+INSERT INTO `schedule_job_log` VALUES (365, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-10 16:00:01');
+INSERT INTO `schedule_job_log` VALUES (366, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-10 16:30:01');
+INSERT INTO `schedule_job_log` VALUES (367, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-10 17:00:01');
+INSERT INTO `schedule_job_log` VALUES (368, 1, 'testTask', 'renren', 0, NULL, 2, '2022-11-10 17:33:38');
+INSERT INTO `schedule_job_log` VALUES (369, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-10 18:00:02');
+INSERT INTO `schedule_job_log` VALUES (370, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-10 22:00:01');
+INSERT INTO `schedule_job_log` VALUES (371, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-10 22:30:00');
+INSERT INTO `schedule_job_log` VALUES (372, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-10 23:00:00');
+INSERT INTO `schedule_job_log` VALUES (373, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-10 23:30:00');
+INSERT INTO `schedule_job_log` VALUES (374, 1, 'testTask', 'renren', 0, NULL, 46, '2022-11-11 00:00:00');
+INSERT INTO `schedule_job_log` VALUES (375, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-11 12:00:00');
+INSERT INTO `schedule_job_log` VALUES (376, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-11 12:30:01');
+INSERT INTO `schedule_job_log` VALUES (377, 1, 'testTask', 'renren', 0, NULL, 8, '2022-11-11 13:00:00');
+INSERT INTO `schedule_job_log` VALUES (378, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-11 13:30:00');
+INSERT INTO `schedule_job_log` VALUES (379, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-11 14:00:00');
+INSERT INTO `schedule_job_log` VALUES (380, 1, 'testTask', 'renren', 0, NULL, 0, '2022-11-11 14:30:00');
+INSERT INTO `schedule_job_log` VALUES (381, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-12 23:00:00');
+INSERT INTO `schedule_job_log` VALUES (382, 1, 'testTask', 'renren', 0, NULL, 1, '2022-11-12 23:30:00');
+INSERT INTO `schedule_job_log` VALUES (383, 1, 'testTask', 'renren', 0, NULL, 16, '2022-11-13 00:00:00');
 
 -- ----------------------------
 -- Table structure for sys_captcha
@@ -574,15 +674,25 @@ CREATE TABLE `sys_captcha`  (
 -- ----------------------------
 -- Records of sys_captcha
 -- ----------------------------
+INSERT INTO `sys_captcha` VALUES ('3311025d-cb6d-47eb-80c9-8096753e29b1', 'n76y7', '2022-11-01 19:46:44');
+INSERT INTO `sys_captcha` VALUES ('4028a226-1ca1-4eac-84a4-5c82f6a0a2d6', 'nnd6x', '2022-09-22 22:43:43');
 INSERT INTO `sys_captcha` VALUES ('5a290cae-752e-4755-8a1a-8331c676318a', 'aafg5', '2021-09-08 22:39:01');
+INSERT INTO `sys_captcha` VALUES ('5cd07b85-91e6-4d6f-8350-ddcc56cf453d', 'm35n3', '2022-10-29 16:18:56');
+INSERT INTO `sys_captcha` VALUES ('7cad8ba2-d512-4ea3-8fa5-d8afd2c4c5d0', 'pemfg', '2022-09-23 00:06:54');
+INSERT INTO `sys_captcha` VALUES ('862a2338-c86a-413b-8eca-753e091bb37c', 'm65c6', '2022-09-22 22:34:31');
+INSERT INTO `sys_captcha` VALUES ('8b368091-de0b-46d6-875c-5121cd5bfd99', 'g4gdc', '2022-09-22 22:34:11');
+INSERT INTO `sys_captcha` VALUES ('8c35025a-3fa5-42db-83cd-57587d35793a', '8ee36', '2022-09-23 00:16:09');
 INSERT INTO `sys_captcha` VALUES ('90bbe5b4-a593-4c38-8c8b-1fee2c8de76e', 'med7e', '2021-09-10 21:23:50');
 INSERT INTO `sys_captcha` VALUES ('91a85209-802a-44fc-86c5-d31b92463bc0', 'nn4dy', '2021-09-08 22:39:16');
+INSERT INTO `sys_captcha` VALUES ('9ae613c9-2c45-4ce3-8650-dd75df150729', 'pyg7e', '2022-09-23 00:16:12');
 INSERT INTO `sys_captcha` VALUES ('9c6e6fac-2109-4fce-87ac-74ab94f8fa49', '35yw2', '2021-09-08 22:46:34');
+INSERT INTO `sys_captcha` VALUES ('a223f4f6-239d-4904-8b38-58601aca0329', '3fewe', '2022-09-23 09:05:34');
 INSERT INTO `sys_captcha` VALUES ('a4968999-dff1-4de5-8bc6-d7d39d144aff', 'yxmcg', '2021-09-08 22:39:25');
 INSERT INTO `sys_captcha` VALUES ('acff52b0-af64-4253-8c6a-ca2ac4fd73a5', 'y364b', '2021-09-08 22:46:19');
 INSERT INTO `sys_captcha` VALUES ('bcddfc4c-6653-433c-8662-9be3144a430c', '4ey7g', '2021-09-25 14:26:10');
 INSERT INTO `sys_captcha` VALUES ('c12b0f9a-273a-476d-8292-b468ec3738a4', 'fdc88', '2021-09-10 21:30:20');
 INSERT INTO `sys_captcha` VALUES ('d88a0ad1-2f1d-471c-8d06-948893274d79', '3pa4e', '2021-09-12 11:10:02');
+INSERT INTO `sys_captcha` VALUES ('f7a8ae20-9ee6-4875-83a4-fa3ee05ee33e', 'n62g3', '2022-09-26 09:50:03');
 INSERT INTO `sys_captcha` VALUES ('fa9010ab-95f7-4ebe-8e48-716af963884c', 'nxwfg', '2021-09-08 22:12:38');
 INSERT INTO `sys_captcha` VALUES ('fea49f35-0d24-4db3-8492-d3c4334ae4c9', 'ge73g', '2021-09-08 22:13:04');
 
@@ -619,7 +729,7 @@ CREATE TABLE `sys_log`  (
   `ip` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'IP地址',
   `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
@@ -627,6 +737,8 @@ CREATE TABLE `sys_log`  (
 INSERT INTO `sys_log` VALUES (1, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":31,\"parentId\":0,\"name\":\"商品系统\",\"url\":\"\",\"perms\":\"\",\"type\":0,\"icon\":\"editor\",\"orderNum\":0,\"list\":[]}]', 6, '0:0:0:0:0:0:0:1', '2021-09-08 21:43:29');
 INSERT INTO `sys_log` VALUES (2, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":32,\"parentId\":31,\"name\":\"分类维护\",\"url\":\"product/category\",\"perms\":\"\",\"type\":1,\"icon\":\"menu\",\"orderNum\":0,\"list\":[]}]', 10, '0:0:0:0:0:0:0:1', '2021-09-08 21:45:14');
 INSERT INTO `sys_log` VALUES (3, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":33,\"parentId\":31,\"name\":\"品牌管理\",\"url\":\"product/brand\",\"perms\":\"\",\"type\":1,\"icon\":\"editor\",\"orderNum\":0,\"list\":[]}]', 8, '0:0:0:0:0:0:0:1', '2021-09-09 23:12:13');
+INSERT INTO `sys_log` VALUES (4, 'admin', '修改菜单', 'io.renren.modules.sys.controller.SysMenuController.update()', '[{\"menuId\":66,\"parentId\":46,\"name\":\"分类热门\",\"url\":\"product/category\",\"perms\":\"\",\"type\":1,\"icon\":\"zhedie\",\"orderNum\":0,\"list\":[]}]', 10, '0:0:0:0:0:0:0:1', '2022-09-24 12:06:47');
+INSERT INTO `sys_log` VALUES (5, 'admin', '修改菜单', 'io.renren.modules.sys.controller.SysMenuController.update()', '[{\"menuId\":66,\"parentId\":46,\"name\":\"分类热门\",\"url\":\"content/category\",\"perms\":\"\",\"type\":1,\"icon\":\"zhedie\",\"orderNum\":0,\"list\":[]}]', 12, '0:0:0:0:0:0:0:1', '2022-09-28 11:09:11');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -805,7 +917,7 @@ CREATE TABLE `sys_user_token`  (
 -- ----------------------------
 -- Records of sys_user_token
 -- ----------------------------
-INSERT INTO `sys_user_token` VALUES (1, 'ee5635d7d343844241aa414bdaeb4b3c', '2022-02-25 10:12:15', '2022-02-24 22:12:15');
+INSERT INTO `sys_user_token` VALUES (1, '1b1e5e946643377e68c97ba1133c6f6a', '2022-11-13 11:13:44', '2022-11-12 23:13:44');
 
 -- ----------------------------
 -- Table structure for tb_user

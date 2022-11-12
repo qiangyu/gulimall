@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.56.10
+ Source Server         : 腾讯云
  Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : 192.168.56.10:3306
+ Source Server Version : 50739
+ Source Host           : 43.139.28.47:3306
  Source Schema         : gulimall_oms
 
  Target Server Type    : MySQL
- Target Server Version : 50735
+ Target Server Version : 50739
  File Encoding         : 65001
 
- Date: 17/03/2022 22:14:13
+ Date: 13/11/2022 00:03:58
 */
 
 SET NAMES utf8mb4;
@@ -340,8 +340,8 @@ CREATE TABLE `undo_log`  (
   `context` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `rollback_info` longblob NOT NULL,
   `log_status` int(11) NOT NULL,
-  `log_created` datetime(0) NOT NULL,
-  `log_modified` datetime(0) NOT NULL,
+  `log_created` datetime(0) NULL DEFAULT NULL,
+  `log_modified` datetime(0) NULL DEFAULT NULL,
   `ext` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE

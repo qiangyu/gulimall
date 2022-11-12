@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.56.10
+ Source Server         : 腾讯云
  Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : 192.168.56.10:3306
+ Source Server Version : 50739
+ Source Host           : 43.139.28.47:3306
  Source Schema         : gulimall_wms
 
  Target Server Type    : MySQL
- Target Server Version : 50735
+ Target Server Version : 50739
  File Encoding         : 65001
 
- Date: 17/03/2022 22:14:41
+ Date: 13/11/2022 00:04:44
 */
 
 SET NAMES utf8mb4;
@@ -28,8 +28,8 @@ CREATE TABLE `undo_log`  (
   `context` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `rollback_info` longblob NOT NULL,
   `log_status` int(11) NOT NULL,
-  `log_created` datetime(0) NOT NULL,
-  `log_modified` datetime(0) NOT NULL,
+  `log_created` datetime(0) NULL DEFAULT NULL,
+  `log_modified` datetime(0) NULL DEFAULT NULL,
   `ext` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE
@@ -48,17 +48,21 @@ CREATE TABLE `wms_purchase`  (
   `status` int(4) NULL DEFAULT NULL,
   `ware_id` bigint(20) NULL DEFAULT NULL,
   `amount` decimal(18, 4) NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `update_time` datetime(0) NULL DEFAULT NULL,
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_purchase
 -- ----------------------------
-INSERT INTO `wms_purchase` VALUES (3, 1, 'admin', '13612345678', 1, 3, NULL, NULL, NULL, '2021-10-13 01:33:13');
-INSERT INTO `wms_purchase` VALUES (6, 1, 'admin', '13612345678', NULL, 3, NULL, NULL, '2021-10-13 01:45:46', '2021-10-13 01:48:48');
+INSERT INTO `wms_purchase` VALUES (3, 1, 'admin', '13612345678', 1, 3, NULL, NULL, '2022-11-09 16:17:33', '2022-11-10 16:17:37');
+INSERT INTO `wms_purchase` VALUES (6, 1, 'admin', '13612345678', 1, 3, NULL, NULL, '2021-10-13 01:45:46', '2022-11-10 16:28:22');
 INSERT INTO `wms_purchase` VALUES (7, 1, 'admin', '13612345678', 1, 3, NULL, NULL, '2022-01-04 16:23:16', '2022-01-04 20:36:35');
+INSERT INTO `wms_purchase` VALUES (12, 1, 'admin', '13612345678', 1, 4, NULL, NULL, '2022-11-10 17:02:08', '2022-11-10 22:10:56');
+INSERT INTO `wms_purchase` VALUES (14, 1, 'admin', '13612345678', 1, 4, NULL, NULL, '2022-11-11 11:53:40', '2022-11-11 12:15:03');
+INSERT INTO `wms_purchase` VALUES (16, 1, 'admin', '13612345678', 1, 4, NULL, NULL, '2022-11-11 13:20:28', '2022-11-11 13:33:59');
+INSERT INTO `wms_purchase` VALUES (17, 1, 'admin', '13612345678', 1, 3, NULL, NULL, '2022-11-11 14:54:00', '2022-11-11 14:54:47');
 
 -- ----------------------------
 -- Table structure for wms_purchase_detail
@@ -73,7 +77,7 @@ CREATE TABLE `wms_purchase_detail`  (
   `ware_id` bigint(20) NULL DEFAULT NULL COMMENT '仓库id',
   `status` int(11) NULL DEFAULT NULL COMMENT '状态[0新建，1已分配，2正在采购，3已完成，4采购失败]',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购需求' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购需求' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_purchase_detail
@@ -86,6 +90,16 @@ INSERT INTO `wms_purchase_detail` VALUES (9, 7, 28, 100, NULL, 1, 3);
 INSERT INTO `wms_purchase_detail` VALUES (10, 7, 29, 100, NULL, 1, 3);
 INSERT INTO `wms_purchase_detail` VALUES (11, 7, 30, 100, NULL, 1, 3);
 INSERT INTO `wms_purchase_detail` VALUES (12, 7, 31, 100, NULL, 1, 3);
+INSERT INTO `wms_purchase_detail` VALUES (13, 12, 30, 10, NULL, 1, 4);
+INSERT INTO `wms_purchase_detail` VALUES (14, 12, 31, 10, NULL, 1, 2);
+INSERT INTO `wms_purchase_detail` VALUES (15, 14, 13, 10, NULL, 2, 3);
+INSERT INTO `wms_purchase_detail` VALUES (16, 14, 14, 10, NULL, 2, 4);
+INSERT INTO `wms_purchase_detail` VALUES (17, 12, 13, 10, NULL, 2, 2);
+INSERT INTO `wms_purchase_detail` VALUES (18, 12, 14, 10, NULL, 2, 2);
+INSERT INTO `wms_purchase_detail` VALUES (19, 16, 13, 10, NULL, 2, 3);
+INSERT INTO `wms_purchase_detail` VALUES (20, 16, 14, 10, NULL, 2, 4);
+INSERT INTO `wms_purchase_detail` VALUES (21, 17, 13, 10, NULL, 2, 3);
+INSERT INTO `wms_purchase_detail` VALUES (22, 17, 14, 10, NULL, 2, 3);
 
 -- ----------------------------
 -- Table structure for wms_ware_info
@@ -97,12 +111,13 @@ CREATE TABLE `wms_ware_info`  (
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '仓库地址',
   `areacode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区域编码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '仓库信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '仓库信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_ware_info
 -- ----------------------------
 INSERT INTO `wms_ware_info` VALUES (1, '上海仓库', '上海市浦东区', '10001');
+INSERT INTO `wms_ware_info` VALUES (2, '广州仓库', '广州', '10000');
 
 -- ----------------------------
 -- Table structure for wms_ware_order_task
@@ -234,7 +249,7 @@ CREATE TABLE `wms_ware_sku`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sku_id`(`sku_id`) USING BTREE,
   INDEX `ware_id`(`ware_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品库存' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品库存' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_ware_sku
@@ -243,5 +258,7 @@ INSERT INTO `wms_ware_sku` VALUES (8, 28, 1, 100, '华为Mate40 Pro手机 黑色
 INSERT INTO `wms_ware_sku` VALUES (9, 29, 1, 100, '华为Mate40 Pro手机 黑色 5G版8GB+256G', 2);
 INSERT INTO `wms_ware_sku` VALUES (10, 30, 1, 100, '华为Mate40 Pro手机 白色 4G版8GB+256G', 0);
 INSERT INTO `wms_ware_sku` VALUES (11, 31, 1, 100, '华为Mate40 Pro手机 白色 5G版8GB+256G', 2);
+INSERT INTO `wms_ware_sku` VALUES (26, 13, 2, 30, ' Apple iPhone 11 (A2223)  白色 256GB', 0);
+INSERT INTO `wms_ware_sku` VALUES (27, 14, 2, 30, ' Apple iPhone 11 (A2223)  白色 64GB', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.56.10
+ Source Server         : 腾讯云
  Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : 192.168.56.10:3306
+ Source Server Version : 50739
+ Source Host           : 43.139.28.47:3306
  Source Schema         : gulimall_sms
 
  Target Server Type    : MySQL
- Target Server Version : 50735
+ Target Server Version : 50739
  File Encoding         : 65001
 
- Date: 17/03/2022 22:14:29
+ Date: 13/11/2022 00:04:21
 */
 
 SET NAMES utf8mb4;
@@ -146,7 +146,7 @@ CREATE TABLE `sms_member_price`  (
   `member_level_id` bigint(20) NULL DEFAULT NULL COMMENT '会员等级id',
   `member_level_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '会员等级名',
   `member_price` decimal(18, 4) NULL DEFAULT NULL COMMENT '会员对应价格',
-  `add_other` tinyint(1) NULL DEFAULT NULL COMMENT '可否叠加其他优惠[0-不可叠加优惠，1-可叠加]',
+  `add_other` tinyint(1) NULL DEFAULT 0 COMMENT '可否叠加其他优惠[0-不可叠加优惠，1-可叠加]',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品会员价格' ROW_FORMAT = Dynamic;
 
@@ -233,7 +233,23 @@ CREATE TABLE `sms_sku_full_reduction`  (
   `reduce_price` decimal(18, 4) NULL DEFAULT NULL COMMENT '减多少',
   `add_other` tinyint(1) NULL DEFAULT NULL COMMENT '是否参与其他优惠',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品满减信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品满减信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sms_sku_full_reduction
+-- ----------------------------
+INSERT INTO `sms_sku_full_reduction` VALUES (1, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (2, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (3, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (4, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (5, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (6, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (7, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (8, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (9, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (10, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (11, NULL, 0.0000, 0.0000, 0);
+INSERT INTO `sms_sku_full_reduction` VALUES (12, NULL, 0.0000, 0.0000, 0);
 
 -- ----------------------------
 -- Table structure for sms_sku_ladder
@@ -247,7 +263,23 @@ CREATE TABLE `sms_sku_ladder`  (
   `price` decimal(18, 4) NULL DEFAULT NULL COMMENT '折后价',
   `add_other` tinyint(1) NULL DEFAULT NULL COMMENT '是否叠加其他优惠[0-不可叠加，1-可叠加]',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品阶梯价格' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品阶梯价格' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sms_sku_ladder
+-- ----------------------------
+INSERT INTO `sms_sku_ladder` VALUES (1, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (2, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (3, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (4, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (5, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (6, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (7, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (8, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (9, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (10, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (11, NULL, 0, 0.00, NULL, 0);
+INSERT INTO `sms_sku_ladder` VALUES (12, NULL, 0, 0.00, NULL, 0);
 
 -- ----------------------------
 -- Table structure for sms_spu_bounds
@@ -260,7 +292,7 @@ CREATE TABLE `sms_spu_bounds`  (
   `buy_bounds` decimal(18, 4) NULL DEFAULT NULL COMMENT '购物积分',
   `work` tinyint(1) NULL DEFAULT NULL COMMENT '优惠生效情况[1111（四个状态位，从右到左）;0 - 无优惠，成长积分是否赠送;1 - 无优惠，购物积分是否赠送;2 - 有优惠，成长积分是否赠送;3 - 有优惠，购物积分是否赠送【状态位0：不赠送，1：赠送】]',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品spu积分设置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品spu积分设置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sms_spu_bounds
@@ -268,6 +300,9 @@ CREATE TABLE `sms_spu_bounds`  (
 INSERT INTO `sms_spu_bounds` VALUES (1, 16, 1.0000, 1.0000, NULL);
 INSERT INTO `sms_spu_bounds` VALUES (2, 14, 1.0000, 1.0000, NULL);
 INSERT INTO `sms_spu_bounds` VALUES (3, 18, 22.0000, 11.0000, NULL);
+INSERT INTO `sms_spu_bounds` VALUES (4, 33, 500.0000, 500.0000, NULL);
+INSERT INTO `sms_spu_bounds` VALUES (5, 34, 500.0000, 500.0000, NULL);
+INSERT INTO `sms_spu_bounds` VALUES (6, 35, 500.0000, 500.0000, NULL);
 
 -- ----------------------------
 -- Table structure for undo_log
@@ -280,8 +315,8 @@ CREATE TABLE `undo_log`  (
   `context` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `rollback_info` longblob NOT NULL,
   `log_status` int(11) NOT NULL,
-  `log_created` datetime(0) NOT NULL,
-  `log_modified` datetime(0) NOT NULL,
+  `log_created` datetime(0) NULL DEFAULT NULL,
+  `log_modified` datetime(0) NULL DEFAULT NULL,
   `ext` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE

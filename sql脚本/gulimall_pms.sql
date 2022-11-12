@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.56.10
+ Source Server         : 腾讯云
  Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : 192.168.56.10:3306
+ Source Server Version : 50739
+ Source Host           : 43.139.28.47:3306
  Source Schema         : gulimall_pms
 
  Target Server Type    : MySQL
- Target Server Version : 50735
+ Target Server Version : 50739
  File Encoding         : 65001
 
- Date: 17/03/2022 22:14:23
+ Date: 13/11/2022 00:04:08
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `pms_attr`  (
   `catelog_id` bigint(20) NULL DEFAULT NULL COMMENT '所属分类',
   `show_desc` tinyint(4) NULL DEFAULT NULL COMMENT '快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整',
   PRIMARY KEY (`attr_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品属性' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品属性' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_attr
@@ -48,7 +48,8 @@ INSERT INTO `pms_attr` VALUES (13, '机身长度（mm）', 0, 0, 'xx', '158.3;13
 INSERT INTO `pms_attr` VALUES (14, '机身材质工艺', 0, 1, 'xxx', '以官网信息为准;陶瓷;玻璃', 1, 1, 225, 0);
 INSERT INTO `pms_attr` VALUES (15, 'CPU品牌', 1, 0, 'xxx', '高通(Qualcomm);海思（Hisilicon）;以官网信息为准', 1, 1, 225, 1);
 INSERT INTO `pms_attr` VALUES (16, 'CPU型号', 1, 0, 'xxx', '骁龙665;骁龙845;骁龙855;骁龙730;HUAWEI Kirin 980;HUAWEI Kirin 970', 1, 1, 225, 0);
-INSERT INTO `pms_attr` VALUES (20, 'test', 0, 1, '11', 'tt', 1, 1, 225, 0);
+INSERT INTO `pms_attr` VALUES (21, '内存', 0, 0, 'xxx', '4GB;6GB;8GB;12GB', 0, 1, 225, 0);
+INSERT INTO `pms_attr` VALUES (22, '内存', 0, 0, 'xxx', '4GB;6GB;8GB;12GB', 0, 1, 225, 0);
 
 -- ----------------------------
 -- Table structure for pms_attr_attrgroup_relation
@@ -60,7 +61,7 @@ CREATE TABLE `pms_attr_attrgroup_relation`  (
   `attr_group_id` bigint(20) NULL DEFAULT NULL COMMENT '属性分组id',
   `attr_sort` int(11) NULL DEFAULT NULL COMMENT '属性组内排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '属性&属性分组关联' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '属性&属性分组关联' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_attr_attrgroup_relation
@@ -72,6 +73,9 @@ INSERT INTO `pms_attr_attrgroup_relation` VALUES (27, 13, 2, NULL);
 INSERT INTO `pms_attr_attrgroup_relation` VALUES (28, 14, 2, NULL);
 INSERT INTO `pms_attr_attrgroup_relation` VALUES (29, 15, 7, NULL);
 INSERT INTO `pms_attr_attrgroup_relation` VALUES (30, 16, 7, NULL);
+INSERT INTO `pms_attr_attrgroup_relation` VALUES (31, 9, 2, NULL);
+INSERT INTO `pms_attr_attrgroup_relation` VALUES (32, 10, 1, NULL);
+INSERT INTO `pms_attr_attrgroup_relation` VALUES (33, 12, 2, NULL);
 
 -- ----------------------------
 -- Table structure for pms_attr_group
@@ -108,29 +112,15 @@ CREATE TABLE `pms_brand`  (
   `first_letter` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '检索首字母',
   `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`brand_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_brand
 -- ----------------------------
-INSERT INTO `pms_brand` VALUES (9, '华为', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/de2426bd-a689-41d0-865a-d45d1afa7cde_huawei.png', '华为', 1, 'H', 1);
-INSERT INTO `pms_brand` VALUES (10, '小米', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/1f9e6968-cf92-462e-869a-4c2331a4113f_xiaomi.png', '小米', 1, 'M', 1);
+INSERT INTO `pms_brand` VALUES (9, '华为', 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-09-25/ecd491f1-bdf4-4908-88a5-36e90ee749c7_华为mate40商品介绍.jpg', '华为', 1, 'H', 1);
+INSERT INTO `pms_brand` VALUES (10, '小米', 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-10-04/c8699110-a53c-47f6-85e3-c7b39c4661d4_华为mate40商品介绍.jpg', '小米', 1, 'M', 1);
 INSERT INTO `pms_brand` VALUES (11, 'oppo', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/5c8303f2-8b0c-4a5b-89a6-86513133d758_oppo.png', 'oppo', 1, 'O', 1);
 INSERT INTO `pms_brand` VALUES (12, 'Apple', 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/819bb0b1-3ed8-4072-8304-78811a289781_apple.png', '苹果', 1, 'A', 1);
-INSERT INTO `pms_brand` VALUES (14, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (15, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (18, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (19, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (20, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (21, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (22, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (23, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (24, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (25, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (26, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (27, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (28, '华为', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_brand` VALUES (29, '华为', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for pms_category
@@ -138,17 +128,17 @@ INSERT INTO `pms_brand` VALUES (29, '华为', NULL, NULL, NULL, NULL, NULL);
 DROP TABLE IF EXISTS `pms_category`;
 CREATE TABLE `pms_category`  (
   `cat_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '分类id',
-  `name` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分类名称',
-  `parent_cid` bigint(20) NULL DEFAULT NULL COMMENT '父分类id',
-  `cat_level` int(11) NULL DEFAULT NULL COMMENT '层级',
-  `show_status` tinyint(4) NULL DEFAULT NULL COMMENT '是否显示[0-不显示，1显示]',
-  `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
+  `name` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分类名称',
+  `parent_cid` bigint(20) NOT NULL COMMENT '父分类id',
+  `cat_level` int(11) NOT NULL COMMENT '层级',
+  `show_status` tinyint(4) NOT NULL COMMENT '是否显示[0-不显示，1显示]',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `icon` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图标地址',
   `product_unit` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '计量单位',
   `product_count` int(11) NULL DEFAULT NULL COMMENT '商品数量',
   PRIMARY KEY (`cat_id`) USING BTREE,
   INDEX `parent_cid`(`parent_cid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1433 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品三级分类' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1426 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品三级分类' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_category
@@ -1576,8 +1566,7 @@ INSERT INTO `pms_category` VALUES (1420, 'SUV（二手）', 164, 3, 1, 0, NULL, 
 INSERT INTO `pms_category` VALUES (1421, '跑车（二手）', 164, 3, 1, 0, NULL, NULL, 0);
 INSERT INTO `pms_category` VALUES (1422, '皮卡（二手）', 164, 3, 1, 0, NULL, NULL, 0);
 INSERT INTO `pms_category` VALUES (1423, '面包车（二手）', 164, 3, 1, 0, NULL, NULL, 0);
-INSERT INTO `pms_category` VALUES (1431, 'dsa323', 1, 2, 1, NULL, NULL, NULL, NULL);
-INSERT INTO `pms_category` VALUES (1432, 'fdsffdsadddd大萨达', 1431, 3, 1, NULL, NULL, NULL, NULL);
+INSERT INTO `pms_category` VALUES (1425, 'test', 1, 2, 0, 0, '', '本', NULL);
 
 -- ----------------------------
 -- Table structure for pms_category_brand_relation
@@ -1637,7 +1626,7 @@ CREATE TABLE `pms_product_attr_value`  (
   `attr_sort` int(11) NULL DEFAULT NULL COMMENT '顺序',
   `quick_show` tinyint(4) NULL DEFAULT NULL COMMENT '快速展示【是否展示在介绍上；0-否 1-是】',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 145 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu属性值' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 285 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu属性值' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_product_attr_value
@@ -1669,6 +1658,36 @@ INSERT INTO `pms_product_attr_value` VALUES (141, 18, 13, '机身长度（mm）'
 INSERT INTO `pms_product_attr_value` VALUES (142, 18, 14, '机身材质工艺', '以官网信息为准', NULL, 1);
 INSERT INTO `pms_product_attr_value` VALUES (143, 18, 15, 'CPU品牌', '海思（Hisilicon）', NULL, 1);
 INSERT INTO `pms_product_attr_value` VALUES (144, 18, 16, 'CPU型号', 'HUAWEI Kirin 980', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (255, 33, 7, '入网型号', '以官网信息为准', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (256, 33, 8, '上市年份', '2019', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (257, 33, 10, '内存', '4GB', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (258, 33, 9, '颜色', '白色', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (259, 33, 11, '机身颜色', '黑色', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (260, 33, 12, '版本', '12g', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (261, 33, 13, '机身长度（mm）', '158.3', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (262, 33, 14, '机身材质工艺', '陶瓷;玻璃', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (263, 33, 15, 'CPU品牌', '以官网信息为准', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (264, 33, 16, 'CPU型号', '骁龙855', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (265, 34, 7, '入网型号', '以官网信息为准', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (266, 34, 8, '上市年份', '2019', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (267, 34, 10, '内存', '4GB', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (268, 34, 9, '颜色', '黑色', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (269, 34, 11, '机身颜色', '黑色', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (270, 34, 12, '版本', '12g', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (271, 34, 13, '机身长度（mm）', '158.3', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (272, 34, 14, '机身材质工艺', '陶瓷;玻璃', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (273, 34, 15, 'CPU品牌', '以官网信息为准', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (274, 34, 16, 'CPU型号', '骁龙845', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (275, 35, 7, '入网型号', '以官网信息为准', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (276, 35, 8, '上市年份', '2019', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (277, 35, 10, '内存', '4GB', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (278, 35, 9, '颜色', '黑色', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (279, 35, 11, '机身颜色', '黑色', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (280, 35, 12, '版本', '12g', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (281, 35, 13, '机身长度（mm）', '158.3', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (282, 35, 14, '机身材质工艺', '陶瓷;玻璃', NULL, 0);
+INSERT INTO `pms_product_attr_value` VALUES (283, 35, 15, 'CPU品牌', '以官网信息为准', NULL, 1);
+INSERT INTO `pms_product_attr_value` VALUES (284, 35, 16, 'CPU型号', '骁龙845', NULL, 0);
 
 -- ----------------------------
 -- Table structure for pms_sku_images
@@ -1822,7 +1841,7 @@ CREATE TABLE `pms_sku_info`  (
   `price` decimal(18, 4) NULL DEFAULT NULL COMMENT '价格',
   `sale_count` bigint(20) NULL DEFAULT NULL COMMENT '销量',
   PRIMARY KEY (`sku_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_sku_info
@@ -1858,6 +1877,18 @@ INSERT INTO `pms_sku_info` VALUES (28, 18, '华为Mate40 Pro手机 黑色 4G版8
 INSERT INTO `pms_sku_info` VALUES (29, 18, '华为Mate40 Pro手机 黑色 5G版8GB+256G', NULL, 225, 9, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2022-01-04/3fc04a6b-c4eb-440a-87cd-22e0fad725b2_black1.jpg', '华为Mate40 Pro手机 黑色 5G版8GB+256G', '5G/4G可选 麒麟9000【支持鸿蒙HarmonyOS】 釉白色 5G版8GB+256GB（华为原装66W充电套装）', 7199.0000, 0);
 INSERT INTO `pms_sku_info` VALUES (30, 18, '华为Mate40 Pro手机 白色 4G版8GB+256G', NULL, 225, 9, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2022-01-04/a4d46269-7fcb-4fdf-87a9-d97635a6e499_white1.jpg', '华为Mate40 Pro手机 白色 4G版8GB+256G', '5G/4G可选 麒麟9000【支持鸿蒙HarmonyOS】 釉白色 5G版8GB+256GB（华为原装66W充电套装）', 6599.0000, 0);
 INSERT INTO `pms_sku_info` VALUES (31, 18, '华为Mate40 Pro手机 白色 5G版8GB+256G', NULL, 225, 9, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2022-01-04/a4d46269-7fcb-4fdf-87a9-d97635a6e499_white1.jpg', '华为Mate40 Pro手机 白色 5G版8GB+256G', '5G/4G可选 麒麟9000【支持鸿蒙HarmonyOS】 釉白色 5G版8GB+256GB（华为原装66W充电套装）', 7149.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (32, 33, '苹果test 白色 8GB 8+512', NULL, 225, 12, '', '苹果test 白色 8GB 8+512', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (33, 33, '苹果test 白色 8GB 6+256', NULL, 225, 12, '', '苹果test 白色 8GB 6+256', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (34, 33, '苹果test 白色 12GB 8+512', NULL, 225, 12, '', '苹果test 白色 12GB 8+512', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (35, 33, '苹果test 白色 12GB 6+256', NULL, 225, 12, '', '苹果test 白色 12GB 6+256', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (36, 34, '苹果test 白色 8GB 8+512', NULL, 225, 12, '', '苹果test 白色 8GB 8+512', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (37, 34, '苹果test 白色 8GB 6+256', NULL, 225, 12, '', '苹果test 白色 8GB 6+256', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (38, 34, '苹果test 白色 12GB 8+512', NULL, 225, 12, '', '苹果test 白色 12GB 8+512', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (39, 34, '苹果test 白色 12GB 6+256', NULL, 225, 12, '', '苹果test 白色 12GB 6+256', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (40, 35, '苹果test 白色 8GB 8+512', NULL, 225, 12, '', '苹果test 白色 8GB 8+512', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (41, 35, '苹果test 白色 8GB 6+256', NULL, 225, 12, '', '苹果test 白色 8GB 6+256', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (42, 35, '苹果test 白色 12GB 8+512', NULL, 225, 12, '', '苹果test 白色 12GB 8+512', '啊啊啊', 1999.0000, 0);
+INSERT INTO `pms_sku_info` VALUES (43, 35, '苹果test 白色 12GB 6+256', NULL, 225, 12, '', '苹果test 白色 12GB 6+256', '啊啊啊', 1999.0000, 0);
 
 -- ----------------------------
 -- Table structure for pms_sku_sale_attr_value
@@ -1871,7 +1902,7 @@ CREATE TABLE `pms_sku_sale_attr_value`  (
   `attr_value` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '销售属性值',
   `attr_sort` int(11) NULL DEFAULT NULL COMMENT '顺序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku销售属性&值' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 99 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku销售属性&值' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_sku_sale_attr_value
@@ -1938,6 +1969,42 @@ INSERT INTO `pms_sku_sale_attr_value` VALUES (59, 30, 9, '颜色', '白色', NUL
 INSERT INTO `pms_sku_sale_attr_value` VALUES (60, 30, 12, '版本', '4G版8GB+256G', NULL);
 INSERT INTO `pms_sku_sale_attr_value` VALUES (61, 31, 9, '颜色', '白色', NULL);
 INSERT INTO `pms_sku_sale_attr_value` VALUES (62, 31, 12, '版本', '5G版8GB+256G', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (63, 32, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (64, 32, 10, '内存', '8GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (65, 32, 12, '版本', '8+512', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (66, 33, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (67, 33, 10, '内存', '8GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (68, 33, 12, '版本', '6+256', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (69, 34, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (70, 34, 10, '内存', '12GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (71, 34, 12, '版本', '8+512', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (72, 35, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (73, 35, 10, '内存', '12GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (74, 35, 12, '版本', '6+256', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (75, 36, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (76, 36, 10, '内存', '8GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (77, 36, 12, '版本', '8+512', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (78, 37, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (79, 37, 10, '内存', '8GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (80, 37, 12, '版本', '6+256', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (81, 38, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (82, 38, 10, '内存', '12GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (83, 38, 12, '版本', '8+512', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (84, 39, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (85, 39, 10, '内存', '12GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (86, 39, 12, '版本', '6+256', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (87, 40, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (88, 40, 10, '内存', '8GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (89, 40, 12, '版本', '8+512', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (90, 41, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (91, 41, 10, '内存', '8GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (92, 41, 12, '版本', '6+256', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (93, 42, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (94, 42, 10, '内存', '12GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (95, 42, 12, '版本', '8+512', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (96, 43, 9, '颜色', '白色', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (97, 43, 10, '内存', '12GB', NULL);
+INSERT INTO `pms_sku_sale_attr_value` VALUES (98, 43, 12, '版本', '6+256', NULL);
 
 -- ----------------------------
 -- Table structure for pms_spu_comment
@@ -1975,7 +2042,7 @@ CREATE TABLE `pms_spu_images`  (
   `img_sort` int(11) NULL DEFAULT NULL COMMENT '顺序',
   `default_img` tinyint(4) NULL DEFAULT NULL COMMENT '是否默认图',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu图片' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu图片' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_spu_images
@@ -2002,6 +2069,9 @@ INSERT INTO `pms_spu_images` VALUES (99, 18, NULL, 'https://gulimall-wan.oss-cn-
 INSERT INTO `pms_spu_images` VALUES (100, 18, NULL, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2022-01-04/189c48c3-db6f-490b-8066-90d96ea44ff2_black2.jpg', NULL, NULL);
 INSERT INTO `pms_spu_images` VALUES (101, 18, NULL, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2022-01-04/a4d46269-7fcb-4fdf-87a9-d97635a6e499_white1.jpg', NULL, NULL);
 INSERT INTO `pms_spu_images` VALUES (102, 18, NULL, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2022-01-04/ce6bfc5a-5d88-4c48-869d-7e786846a8ec_white2.jpg', NULL, NULL);
+INSERT INTO `pms_spu_images` VALUES (114, 33, NULL, 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-11-02/3383b981-9ffa-49ed-81fe-0412fb6516bc_ccd1077b985c7150.jpg', NULL, NULL);
+INSERT INTO `pms_spu_images` VALUES (115, 34, NULL, 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-11-02/3383b981-9ffa-49ed-81fe-0412fb6516bc_ccd1077b985c7150.jpg', NULL, NULL);
+INSERT INTO `pms_spu_images` VALUES (116, 35, NULL, 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-11-02/3383b981-9ffa-49ed-81fe-0412fb6516bc_ccd1077b985c7150.jpg', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for pms_spu_info
@@ -2015,10 +2085,10 @@ CREATE TABLE `pms_spu_info`  (
   `brand_id` bigint(20) NULL DEFAULT NULL COMMENT '品牌id',
   `weight` decimal(18, 4) NULL DEFAULT NULL,
   `publish_status` tinyint(4) NULL DEFAULT NULL COMMENT '上架状态[0 - 新建，1 - 上架，2 - 下架]',
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `update_time` datetime(0) NULL DEFAULT NULL,
+  `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'spu信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pms_spu_info
@@ -2027,6 +2097,9 @@ INSERT INTO `pms_spu_info` VALUES (11, '华为 HUAWEI Mate 30 Pro', '华为 HUAW
 INSERT INTO `pms_spu_info` VALUES (13, ' Apple iPhone 11 (A2223) ', ' Apple iPhone 11 (A2223) ', 225, 12, 0.1940, 1, '2019-11-27 01:00:00', '2021-11-14 15:11:10');
 INSERT INTO `pms_spu_info` VALUES (14, '测试商品名称', '测试商品描述', 225, 11, 0.4000, 1, '2021-11-28 11:11:35', '2021-11-28 03:14:20');
 INSERT INTO `pms_spu_info` VALUES (18, '华为Mate40 Pro手机', '【全新正品】大量现货速发，全国联保一年。【赠】无线充电器+壳膜套装+运费险。查看mate40e', 225, 9, 0.2120, 1, '2022-01-04 16:19:40', '2022-01-04 12:37:52');
+INSERT INTO `pms_spu_info` VALUES (33, '苹果test', '苹果啊啊啊啊', 225, 12, 1.7000, 0, '2022-11-12 23:44:34', '2022-11-12 23:44:39');
+INSERT INTO `pms_spu_info` VALUES (34, '苹果test', '苹果啊啊啊啊', 225, 12, 1.7000, 0, '2022-11-12 23:44:37', '2022-11-12 23:44:42');
+INSERT INTO `pms_spu_info` VALUES (35, '苹果test', '苹果啊啊啊啊', 225, 12, 1.7000, 0, '2022-11-12 23:44:40', '2022-11-12 23:44:44');
 
 -- ----------------------------
 -- Table structure for pms_spu_info_desc
@@ -2045,6 +2118,9 @@ INSERT INTO `pms_spu_info_desc` VALUES (11, 'https://gulimall-hello.oss-cn-beiji
 INSERT INTO `pms_spu_info_desc` VALUES (13, 'https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-27/ffc5a377-b037-4f26-84a0-df5b1c7cf42d_f205d9c99a2b4b01.jpg');
 INSERT INTO `pms_spu_info_desc` VALUES (14, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2021-11-28/3378e7da-8f00-42a7-8c43-696f9a958835_打火机.jpeg');
 INSERT INTO `pms_spu_info_desc` VALUES (18, 'https://gulimall-wan.oss-cn-shanghai.aliyuncs.com/2022-01-04/110deeba-7cb7-4f12-8d2e-8475398255db_华为mate40商品介绍.jpg');
+INSERT INTO `pms_spu_info_desc` VALUES (33, 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-11-02/c991ca0a-f58a-4208-82a1-ffa928b8d32f_a2c208410ae84d1f.jpg');
+INSERT INTO `pms_spu_info_desc` VALUES (34, 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-11-02/c991ca0a-f58a-4208-82a1-ffa928b8d32f_a2c208410ae84d1f.jpg');
+INSERT INTO `pms_spu_info_desc` VALUES (35, 'https://gulimall---zch.oss-cn-qingdao.aliyuncs.com/2022-11-02/c991ca0a-f58a-4208-82a1-ffa928b8d32f_a2c208410ae84d1f.jpg');
 
 -- ----------------------------
 -- Table structure for undo_log
@@ -2057,8 +2133,8 @@ CREATE TABLE `undo_log`  (
   `context` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `rollback_info` longblob NOT NULL,
   `log_status` int(11) NOT NULL,
-  `log_created` datetime(0) NOT NULL,
-  `log_modified` datetime(0) NOT NULL,
+  `log_created` datetime(0) NULL DEFAULT NULL,
+  `log_modified` datetime(0) NULL DEFAULT NULL,
   `ext` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE
